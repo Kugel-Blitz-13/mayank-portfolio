@@ -1,7 +1,9 @@
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import '@/styles/globals.css'
 import { Navbar } from '@/components/Navbar'
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' })
@@ -19,6 +21,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="pointer-events-none fixed inset-0 bg-glow opacity-80" />
         <Navbar />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
