@@ -29,7 +29,7 @@ export default function HomePage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/projects"
-                  className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:opacity-90"
+                  className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:opacity-20"
                 >
                   View projects
                 </Link>
