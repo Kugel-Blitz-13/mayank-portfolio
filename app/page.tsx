@@ -167,13 +167,6 @@ export default function HomePage() {
                   Resume (PDF)
                 </a>
               </div>
-              <div className="mt-8 rounded-2xl border border-white/10 bg-black/20 p-4">
-                <p className="text-xs text-white/60">Tip</p>
-                <p className="mt-2 text-sm text-white/75">
-                  Want this site as a template? Fork it, swap content in <code className="text-white">data/projects.ts</code>,
-                  and drop media into <code className="text-white">public/</code>.
-                </p>
-              </div>
             </div>
           </div>
         </Container>
