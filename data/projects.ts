@@ -37,16 +37,21 @@ export const featuredProjects: Project[] = [
   },
   {
     slug: 'mcp-aero-design',
-    title: 'Modular MCP Servers for Aero Design Automation',
-    subtitle: 'Industry-sponsored (NDA) — agent-ready tool interfaces',
+    title: 'Boeing-Funded MCP Agents for Aero Design Automation',
+    subtitle: 'Boeing-funded (NDA) — agent orchestration + tool interfaces',
     year: '2025–Present',
     tags: ['AI agents', 'MCP', 'CFD', 'tooling', 'robust APIs'],
+    hero: {
+      kind: "image",
+      src: "/media/boeing.jpg",
+      alt: "Boeing-funded project"
+    },    
     highlights: [
-      'Built an AI-agent orchestration layer that can reliably invoke three MCP servers (TiGL, SU2, pyCycle) in sequence for design iteration workflows.',
-      'Focused on production-grade interfaces: strict schemas, session isolation, structured JSON outputs, and testable, repeatable tool execution (overview only).'
+      'Building an agent orchestration layer that invokes multiple MCP servers (geometry, CFD, engine sizing) as reliable tools in a structured workflow (NDA-safe overview).',
+      'Hardening “agent-to-tool” interfaces with strict schemas, session isolation, structured JSON outputs, and reproducible test runs for reliability.'
     ],
     summary:
-      'NDA-limited research on making complex engineering tools agent-callable via robust MCP interfaces; public details are shared at a high level only.'
+      'Boeing-funded research under NDA focused on making engineering tools to be agent-callable via modular MCP interfaces; public details shared at a high level only.'
   },
   {
     slug: 'fifa-analytics',
