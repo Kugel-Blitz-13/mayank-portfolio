@@ -83,12 +83,8 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="rounded-3xl border border-white/10 bg-white/5 p-3">
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2">
-                  <VideoHero
-                    src="/media/gridscout_hero.mp4"
-                    poster="/media/gridscout_poster.jpg"
-                    className="overflow-hidden"
-                  />
+                <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                  <VideoHero src="/media/gridscout_hero.mp4" poster="/media/gridscout_poster.jpg" />
                 </div>
                 <p className="mt-3 text-xs text-white/60">
                   Demo clip: Grid-Scout (smart siting engine).
