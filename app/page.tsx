@@ -23,7 +23,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-5 max-w-xl text-pretty text-base text-white/70 sm:text-lg">
-                I build agentic AI workflows and scalable ML platforms — from data pipelines to model training, evaluation, and production deployment. Recent work spans grid-aware siting optimization, GCP-based ML pipelines, and industry-sponsored research on reliable tool interfaces for AI agents.
+                I build agentic AI workflows and scalable ML platforms, from data pipelines to model training, evaluation, and production deployment. Recent work spans grid-aware siting optimization, GCP-based ML pipelines, and industry-sponsored research on reliable tool interfaces for AI agents.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -84,11 +84,15 @@ export default function HomePage() {
               </div>
 
               <div className="rounded-3xl border border-white/10 bg-white/5 p-3">
-                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2">
-                  <div className="relative aspect-video overflow-hidden rounded-xl">
-                    <VideoHero src="/media/gridscout_hero.mp4" poster="/media/gridscout_poster.jpg" />
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    <VideoHero
+                      src="/media/gridscout_hero.mp4"
+                      poster="/media/gridscout_poster.jpg"
+                    />
                   </div>
                 </div>
+
                 <p className="mt-3 text-xs text-white/60">
                   Demo clip: Grid-Scout (smart siting engine).
                 </p>
