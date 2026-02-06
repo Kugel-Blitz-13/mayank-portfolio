@@ -82,17 +82,14 @@ export default function HomePage() {
                   />
                 </div>
               </div>
-
               <div className="rounded-3xl border border-white/10 bg-white/5 p-3">
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
-                  <div className="relative aspect-[16/9] w-full overflow-hidden">
-                    <VideoHero
-                      src="/media/gridscout_hero.mp4"
-                      poster="/media/gridscout_poster.jpg"
-                    />
-                  </div>
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2">
+                  <VideoHero
+                    src="/media/gridscout_hero.mp4"
+                    poster="/media/gridscout_poster.jpg"
+                    className="overflow-hidden"
+                  />
                 </div>
-
                 <p className="mt-3 text-xs text-white/60">
                   Demo clip: Grid-Scout (smart siting engine).
                 </p>
@@ -105,7 +102,7 @@ export default function HomePage() {
       <section className="pt-16 sm:pt-24">
         <Container>
           <SectionHeading
-            kicker="Selected work"
+            kicker="A few work examples"
             title="Projects with real systems, data, and constraints"
             right={
               <Link
@@ -121,6 +118,40 @@ export default function HomePage() {
             {featuredProjects.slice(0, 4).map((p) => (
               <ProjectCard key={p.slug} project={p} />
             ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="pt-16 sm:pt-24">
+        <Container>
+          <SectionHeading kicker="Publications" title="Selected papers" />
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            <a
+              href="https://www.researchgate.net/publication/370587091_Structure-Based_Learning_for_Robust_Defense_Against_Adversarial_Attacks_in_Autonomous_Driving_Agents"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:border-white/20 hover:bg-white/[0.07]"
+            >
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Robotics • Adversarial ML</p>
+              <h3 className="mt-2 text-base font-semibold text-white">
+                Structure-Based Learning for Robust Defense Against Adversarial Attacks in Autonomous Driving Agents
+              </h3>
+              <p className="mt-2 text-sm text-white/70">Read on ResearchGate →</p>
+            </a>
+
+            <a
+              href="https://ieeexplore.ieee.org/document/10306508/"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:border-white/20 hover:bg-white/[0.07]"
+            >
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Signal Processing • ViT</p>
+              <h3 className="mt-2 text-base font-semibold text-white">
+                Bearing Fault Detection (IEEE Xplore)
+              </h3>
+              <p className="mt-2 text-sm text-white/70">Read on IEEE Xplore →</p>
+            </a>
           </div>
         </Container>
       </section>
