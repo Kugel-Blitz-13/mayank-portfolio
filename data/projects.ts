@@ -38,7 +38,7 @@ export const featuredProjects: Project[] = [
   {
     slug: 'mcp-aero-design',
     title: 'Boeing-Funded MCP Agents for Aero Design Automation',
-    subtitle: 'Boeing-funded (NDA) — agent orchestration + tool interfaces',
+    subtitle: 'Boeing-funded (NDA), agent orchestration + tool interfaces',
     year: '2025–Present',
     tags: ['AI agents', 'MCP', 'CFD', 'tooling', 'robust APIs'],
     hero: {
@@ -77,6 +77,12 @@ export const featuredProjects: Project[] = [
       src: '/media/prototype_1.jpg',
       alt: 'Autonomous driving robustness prototype'
     },
+    links: [
+      {
+        label: 'Paper (ResearchGate) — Adversarial Defense for Autonomous Driving',
+        href: 'https://www.researchgate.net/publication/370587091_Structure-Based_Learning_for_Robust_Defense_Against_Adversarial_Attacks_in_Autonomous_Driving_Agents'
+      }
+    ],
     highlights: [
       'Identified adversarial-attack vulnerabilities and built a real-world prototype to demonstrate practical robustness.',
       'Integrated embedded compute + sensing and validated behavior in controlled test scenarios.'
@@ -106,6 +112,17 @@ export const moreProjects: Project[] = [
     subtitle: 'Vision Transformers + complex-frequency features for noisy vibration',
     year: '2022–2023',
     tags: ['signal processing', 'ViT', 'robust ML'],
+    hero: {
+      kind: 'image',
+      src: '/media/bearing.jpg',
+      alt: 'Bearing Faults'
+    },
+    links: [
+      {
+        label: 'IEEE Xplore — Bearing fault paper',
+        href: 'https://ieeexplore.ieee.org/document/10306508/'
+      }
+    ],    
     highlights: [
       'Proposed a bearing-fault pipeline combining Vision Transformers with complex-frequency features for robustness on noisy signals.',
       'Published work in ICCCNT 2023 (IEEE) and ICAET 2023 (accepted) on bearing fault classification and detection.'
