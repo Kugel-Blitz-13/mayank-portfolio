@@ -115,9 +115,9 @@ export default function HomePage() {
           />
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {featuredProjects.slice(0, 4).map((p) => (
-              <ProjectCard key={p.slug} project={p} />
-            ))}
+          {featuredProjects.map((p) => (
+            <ProjectCard key={p.slug} project={p} />
+          ))}
           </div>
         </Container>
       </section>
