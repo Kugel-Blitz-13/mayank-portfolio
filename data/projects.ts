@@ -54,6 +54,22 @@ export const featuredProjects: Project[] = [
       'Boeing-funded research under NDA focused on making engineering tools to be agent-callable via modular MCP interfaces; public details shared at a high level only.'
   },
   {
+    slug: 'ai-coach-slack-bot',
+    title: 'AI Coach – Multi-Workspace Slack Facilitation Agent',
+    subtitle: 'Slack + AWS Lambda + DynamoDB + OpenAI (agentic intervention system)',
+    year: '2026',
+    tags: ['AI agents', 'Slack API', 'AWS Lambda', 'DynamoDB', 'LLM systems'],
+    hero: { kind: 'image', src: '/media/ai-coach.jpg', alt: 'AI Coach Slack agent' },
+    highlights: [
+      'Designed a multi-workspace Slack agent that detects participation imbalance, topic drift, and silence patterns in real time.',
+      'Built serverless architecture (API Gateway + Lambda container + DynamoDB) with event deduplication, rolling conversation windows, and per-workspace OAuth token isolation.',
+      'Implemented structured intervention logic with configurable thresholds and state resets for controlled, research-style nudging.',
+      'Packaged as a fully reproducible SAM deployment with OAuth flow and secure signature verification.'
+    ],
+    summary:
+      'AI Coach is a serverless, multi-tenant Slack facilitation agent that monitors conversational dynamics and generates lightweight, research-informed nudges using LLMs. Designed for reproducibility and isolation, each deployment runs in its own AWS account, supports multiple Slack workspaces via OAuth, and maintains per-channel rolling state to trigger structured interventions.'
+  },  
+  {
     slug: 'fifa-analytics',
     title: 'FIFA Player Analytics + ML Pipeline',
     subtitle: 'GCP + Spark + PostgreSQL + multi-model regression',
