@@ -59,7 +59,6 @@ export const featuredProjects: Project[] = [
     subtitle: 'Slack + AWS Lambda + DynamoDB + OpenAI (agentic intervention system)',
     year: '2026',
     tags: ['AI agents', 'Slack API', 'AWS Lambda', 'DynamoDB', 'LLM systems'],
-    hero: { kind: 'image', src: '/media/ai-coach.jpg', alt: 'AI Coach Slack agent' },
     highlights: [
       'Designed a multi-workspace Slack agent that detects participation imbalance, topic drift, and silence patterns in real time.',
       'Built serverless architecture (API Gateway + Lambda container + DynamoDB) with event deduplication, rolling conversation windows, and per-workspace OAuth token isolation.',
