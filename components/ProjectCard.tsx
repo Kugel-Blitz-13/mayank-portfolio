@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import clsx from 'clsx'
+import { VideoHero } from '@/components/VideoHero'
 import type { Project } from '@/data/projects'
 
 function Pill({ children }: { children: string }) {
@@ -34,6 +35,12 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
             className="object-cover transition duration-500 group-hover:scale-[1.02]"
             sizes="(max-width: 1024px) 100vw, 720px"
           />
+        </div>
+      ) : null}
+
+      {project.hero?.kind === 'video' && !compact ? (
+        <div className="relative mb-4 overflow-hidden rounded-xl border border-white/10">
+          <VideoHero src={project.hero.src} poster={project.hero.poster} />
         </div>
       ) : null}
 

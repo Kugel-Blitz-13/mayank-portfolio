@@ -17,6 +17,35 @@ export type Project = {
 
 export const featuredProjects: Project[] = [
   {
+    slug: 'pjm-load-forecasting',
+    title: 'PJM Load Forecasting at a Power Trading Firm',
+    subtitle: 'Five Dimensions Energy, Quantitative Analyst Intern (Princeton, NJ)',
+    year: '2026',
+    tags: ['time series forecasting', 'power markets', 'uncertainty quantification', 'production ML'],
+    highlights: [
+      'Improved the production day ahead demand forecast behind PJM retail supply auctions with regime aware weather and calendar features; gains held on 15 of 16 utilities across two independent held out years and were merged for the production cycle.',
+      'Built and deployed a real time forecast for all 20 forecastable PJM zones: hourly, 14 day horizon, refreshed 4 times a day with 90% uncertainty bands, outperforming the grid operator’s own published forecast in every zone.',
+      'Mapped about 2,680 U.S. data center facilities to grid zones from regulatory and service territory data, validated 120 of 120 against independent records, with an LLM extraction pipeline for capacity news that keeps a human in the loop by design.',
+      'Ran about 15 pre registered experiments plus a 1,500 configuration deep learning bake off (LSTM, GRU, TFT); roughly two thirds of ideas were rejected on evidence and every negative result was documented as cleanly as the wins.'
+    ],
+    summary:
+      'Four solo projects on the load forecasting desk of a proprietary energy trading firm in the PJM market: sharper day ahead forecasts for supply auctions, a real time zonal forecast with uncertainty bands, data center load intelligence, and a solar data investigation. Overview only; details stay with the firm.'
+  },
+  {
+    slug: 'gentari-renewables-ml',
+    title: 'Production ML for Renewables at Gentari (PETRONAS)',
+    subtitle: 'Data Scientist → Senior Data Scientist (Gurgaon, India)',
+    year: '2023–2025',
+    tags: ['deep learning', 'solar forecasting', 'RAG', 'automation', 'MLOps'],
+    highlights: [
+      'Challenged third party solar forecasts with a bidirectional LSTM built on novel exogenous features; it surpassed vendor accuracy and was productionized as the in house forecast.',
+      'Architected and launched a private RAG chatbot (FAISS plus a local Llama model) that sped up analyst knowledge retrieval and cut API spend; led a Microsoft partnered solar forecasting framework on Azure while mentoring two interns.',
+      'Automated power injection uploads to government portals for 40 solar and wind plants, saving about 100 man hours every week, and deployed an LSTM inverter fault detection model across company solar sites.'
+    ],
+    summary:
+      'Two years shipping production ML at a global clean energy company: an in house solar forecast that beat vendor accuracy, a private RAG assistant for analysts, and automation across 40 renewable plants.'
+  },
+  {
     slug: 'grid-scout',
     title: 'Grid-Scout',
     subtitle: 'Smart siting for gigawatt-scale data centers',
@@ -69,19 +98,6 @@ export const featuredProjects: Project[] = [
       'AI Coach is a serverless, multi-tenant Slack facilitation agent that monitors conversational dynamics and generates lightweight, research-informed nudges using LLMs. Designed for reproducibility and isolation, each deployment runs in its own AWS account, supports multiple Slack workspaces via OAuth, and maintains per-channel rolling state to trigger structured interventions.'
   },  
   {
-    slug: 'fifa-analytics',
-    title: 'FIFA Player Analytics + ML Pipeline',
-    subtitle: 'GCP + Spark + PostgreSQL + multi-model regression',
-    year: '2026',
-    tags: ['GCP', 'Spark', 'PostgreSQL', 'ML pipeline'],
-    highlights: [
-      'End-to-end pipeline: ingest (2015–2022), unify schemas, and enable scalable analytics in PostgreSQL.',
-      'Trained and benchmarked multiple regression models (Spark MLlib + deep learning) for value or rating prediction on GCP.'
-    ],
-    summary:
-      'A cloud-deployed analytics and modeling pipeline for large, multi-year sports datasets.'
-  },
-  {
     slug: 'adversarial-robust-autonomy',
     title: 'Adversarial Robustness Prototype for Autonomous Driving',
     subtitle: 'Hardware demo using Raspberry Pi + Arduino modules',
@@ -108,6 +124,19 @@ export const featuredProjects: Project[] = [
 ]
 
 export const moreProjects: Project[] = [
+  {
+    slug: 'fifa-analytics',
+    title: 'FIFA Player Analytics + ML Pipeline',
+    subtitle: 'GCP + Spark + PostgreSQL + multi-model regression',
+    year: '2026',
+    tags: ['GCP', 'Spark', 'PostgreSQL', 'ML pipeline'],
+    highlights: [
+      'End-to-end pipeline: ingest (2015–2022), unify schemas, and enable scalable analytics in PostgreSQL.',
+      'Trained and benchmarked multiple regression models (Spark MLlib + deep learning) for value or rating prediction on GCP.'
+    ],
+    summary:
+      'A cloud-deployed analytics and modeling pipeline for large, multi-year sports datasets.'
+  },
   {
     slug: 'private-rag-chatbot',
     title: 'Private RAG Chatbot for Enterprise Knowledge',

@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { SectionHeading } from '@/components/SectionHeading'
 import { ProjectCard } from '@/components/ProjectCard'
-import { VideoHero } from '@/components/VideoHero'
 import { PhotoMosaic } from '@/components/PhotoMosaic'
 import { featuredProjects } from '@/data/projects'
 
@@ -23,7 +22,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-5 max-w-xl text-pretty text-base text-white/70 sm:text-lg">
-                I build agentic AI workflows and scalable ML platforms, from data pipelines to model training, evaluation, and production deployment. Recent work spans grid-aware siting optimization, GCP-based ML pipelines, and industry-sponsored research on reliable tool interfaces for AI agents.
+                I build ML systems for real energy decisions: load forecasting at a power trading firm, production ML for utility scale renewables, and agentic AI workflows from data pipelines to deployment. Recent work spans PJM demand forecasting, grid aware siting optimization, and industry sponsored research on reliable tool interfaces for AI agents.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -63,7 +62,7 @@ export default function HomePage() {
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Now</p>
                   <p className="mt-2 text-sm text-white/75">
-                    Research Assistant (MCP servers) + building grid-aware ML products
+                    Quant work in power markets + Boeing funded research on MCP agent tooling
                   </p>
                 </div>
               </div>
@@ -81,18 +80,6 @@ export default function HomePage() {
                     sizes="(max-width: 768px) 100vw, 40vw"
                   />
                 </div>
-              </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-3">
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2">
-                  <VideoHero
-                    src="/media/gridscout_hero.mp4"
-                    poster="/media/gridscout_poster.jpg"
-                    className="overflow-hidden"
-                  />
-                </div>
-                <p className="mt-3 text-xs text-white/60">
-                  Demo clip: Grid-Scout (smart siting engine).
-                </p>
               </div>
             </div>
           </div>
@@ -213,7 +200,7 @@ export default function HomePage() {
         <Container>
           <SectionHeading kicker="Beyond work" title="Things I do when I’m not coding" />
           <p className="mt-4 max-w-2xl text-sm text-white/70">
-            I like building prototypes, traveling for conferences, and getting out on the water.
+            I like building prototypes, traveling for conferences, getting out on the water, and as of this summer, racing triathlons.
           </p>
           <div className="mt-8">
             <PhotoMosaic />
