@@ -8,6 +8,8 @@ import { TypedWords } from '@/components/TypedWords'
 import { StatTicker } from '@/components/StatTicker'
 import { CareerCurve } from '@/components/CareerCurve'
 import { MusicCard } from '@/components/MusicCard'
+import { TerminalCard } from '@/components/TerminalCard'
+import { Tilt } from '@/components/Tilt'
 import { Reveal } from '@/components/Reveal'
 import { featuredProjects } from '@/data/projects'
 
@@ -85,18 +87,21 @@ export default function HomePage() {
             </div>
 
             <div className="space-y-4">
-              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-2">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-                  <Image
-                    src="/photos/headshot.jpg"
-                    alt="Headshot"
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                  />
+              <Tilt>
+                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-2">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                    <Image
+                      src="/photos/headshot.jpg"
+                      alt="Headshot"
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                    />
+                  </div>
                 </div>
-              </div>
+              </Tilt>
+              <TerminalCard />
             </div>
           </div>
         </Container>

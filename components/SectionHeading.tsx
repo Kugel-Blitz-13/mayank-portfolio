@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Decode } from '@/components/Decode'
 
 export function SectionHeading({
   title,
@@ -14,7 +15,7 @@ export function SectionHeading({
       <div>
         {kicker ? (
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-            {kicker}
+            <Decode text={kicker} />
           </p>
         ) : null}
         <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">

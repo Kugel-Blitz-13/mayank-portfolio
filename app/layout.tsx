@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import '@/styles/globals.css'
 import { Navbar } from '@/components/Navbar'
+import { CommandPalette } from '@/components/CommandPalette'
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="pointer-events-none fixed inset-0 bg-grid" />
         <div className="pointer-events-none fixed inset-0 bg-glow opacity-80" />
         <Navbar />
+        <CommandPalette />
         {children}
         <Analytics />
         <SpeedInsights />

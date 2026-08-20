@@ -40,12 +40,22 @@ export function Navbar() {
             )
           })}
         </nav>
-        <Link
-          href="/docs/Mayank_Dixit_Resume.pdf"
-          className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/85 transition hover:bg-white/10"
-        >
-          Resume
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event('cmdk:open'))}
+            className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/60 transition hover:bg-white/10 hover:text-white sm:inline-flex"
+          >
+            <span>Jump to</span>
+            <kbd className="rounded border border-white/15 bg-white/10 px-1.5 text-[10px]">Ctrl K</kbd>
+          </button>
+          <Link
+            href="/docs/Mayank_Dixit_Resume.pdf"
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/85 transition hover:bg-white/10"
+          >
+            Resume
+          </Link>
+        </div>
       </div>
     </div>
   )
