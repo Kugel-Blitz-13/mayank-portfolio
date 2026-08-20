@@ -32,7 +32,7 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
       onMouseMove={onMouseMove}
       href={`/projects/${project.slug}`}
       className={clsx(
-        'group relative overflow-hidden rounded-2xl border border-white/10 bg-[rgb(var(--card))] shadow-glow transition hover:border-white/20',
+        'group relative block overflow-hidden rounded-2xl border border-white/10 bg-[rgb(var(--card))] shadow-glow transition hover:border-white/20',
         compact && 'p-5',
         !compact && 'p-6'
       )}
