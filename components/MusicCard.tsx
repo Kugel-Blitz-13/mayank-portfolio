@@ -11,16 +11,21 @@ type TopArtist = {
   }
 }
 
+const HIDDEN_ARTISTS = ['cigarettes after sex']
+
 async function getTopArtists(range: 'weeks' | 'lifetime'): Promise<TopArtist[] | null> {
   try {
     const res = await fetch(
-      `https://api.stats.fm/api/v1/users/kugelblitz/top/artists?range=${range}&limit=6`,
+      `https://api.stats.fm/api/v1/users/kugelblitz/top/artists?range=${range}&limit=8`,
       { next: { revalidate: REVALIDATE_SECONDS } }
     )
     if (!res.ok) return null
     const data = await res.json()
     if (!Array.isArray(data?.items) || data.items.length === 0) return null
-    return data.items.slice(0, 6) as TopArtist[]
+    const items = data.items as TopArtist[]
+    return items
+      .filter((a) => !HIDDEN_ARTISTS.includes(a.artist.name.toLowerCase()))
+      .slice(0, 4)
   } catch {
     return null
   }
@@ -28,7 +33,7 @@ async function getTopArtists(range: 'weeks' | 'lifetime'): Promise<TopArtist[] |
 
 function ArtistGrid({ artists }: { artists: TopArtist[] }) {
   return (
-    <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+    <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
       {artists.map((a) => (
         <div
           key={a.artist.name}
