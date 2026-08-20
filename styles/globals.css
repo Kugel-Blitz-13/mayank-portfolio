@@ -54,19 +54,64 @@ body {
   background-position: center, 0 0, 0 0;
 }
 
-/* Ambient orbs: compact, saturated shapes with a hot core and defined falloff */
+/* Top light beam (static) */
 .bg-aurora {
-  background:
-    radial-gradient(620px 300px at 50% -90px, rgba(96, 165, 250, 0.30), transparent 70%),
-    radial-gradient(circle 400px at 7% 16%, rgba(45, 212, 191, 0.42), rgba(45, 212, 191, 0.14) 45%, transparent 66%),
-    radial-gradient(circle 460px at 95% 32%, rgba(96, 165, 250, 0.40), rgba(96, 165, 250, 0.13) 45%, transparent 66%),
-    radial-gradient(circle 500px at 72% 90%, rgba(129, 140, 248, 0.38), rgba(129, 140, 248, 0.13) 45%, transparent 66%),
-    radial-gradient(circle 300px at 13% 80%, rgba(56, 189, 248, 0.34), rgba(56, 189, 248, 0.11) 45%, transparent 66%);
-  animation: auroraDrift 36s ease-in-out infinite alternate;
+  background: radial-gradient(620px 300px at 50% -90px, rgba(96, 165, 250, 0.3), transparent 70%);
 }
-@keyframes auroraDrift {
-  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
-  to { transform: translate3d(1.5%, 1.5%, 0) scale(1.06); }
+
+/* Floating orbs: compact saturated shapes, each drifting on its own path */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.orb-a {
+  width: 800px;
+  height: 800px;
+  left: -14%;
+  top: -6%;
+  background: radial-gradient(circle closest-side, rgba(45, 212, 191, 0.42), rgba(45, 212, 191, 0.14) 45%, transparent 70%);
+  animation: orbFloatA 26s ease-in-out infinite alternate;
+}
+.orb-b {
+  width: 920px;
+  height: 920px;
+  right: -18%;
+  top: 8%;
+  background: radial-gradient(circle closest-side, rgba(96, 165, 250, 0.4), rgba(96, 165, 250, 0.13) 45%, transparent 70%);
+  animation: orbFloatB 32s ease-in-out infinite alternate;
+}
+.orb-c {
+  width: 1000px;
+  height: 1000px;
+  left: 46%;
+  bottom: -28%;
+  background: radial-gradient(circle closest-side, rgba(129, 140, 248, 0.38), rgba(129, 140, 248, 0.13) 45%, transparent 70%);
+  animation: orbFloatC 38s ease-in-out infinite alternate;
+}
+.orb-d {
+  width: 600px;
+  height: 600px;
+  left: -8%;
+  bottom: -4%;
+  background: radial-gradient(circle closest-side, rgba(56, 189, 248, 0.34), rgba(56, 189, 248, 0.11) 45%, transparent 70%);
+  animation: orbFloatD 22s ease-in-out infinite alternate;
+}
+@keyframes orbFloatA {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(130px, 90px, 0) scale(1.08); }
+}
+@keyframes orbFloatB {
+  from { transform: translate3d(0, 0, 0) scale(1.05); }
+  to { transform: translate3d(-150px, 70px, 0) scale(0.96); }
+}
+@keyframes orbFloatC {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-120px, -110px, 0) scale(1.1); }
+}
+@keyframes orbFloatD {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(110px, -80px, 0) scale(1.06); }
 }
 
 /* Frosted glass surface */
@@ -111,7 +156,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .ticker-track { animation: none; }
   .caret { animation: none; }
-  .bg-aurora { animation: none; }
+  .orb { animation: none; }
 }
 
 /* Nice scrollbar */
