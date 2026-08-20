@@ -1,17 +1,15 @@
 import Image from 'next/image'
 
-type Photo = { src: string; alt: string; caption: string }
+type Photo = { src: string; alt: string; caption?: string }
 
 const featurePhotos: Photo[] = [
   {
     src: '/photos/cmu.jpg',
-    alt: 'Standing in front of the Carnegie Mellon University sign',
-    caption: 'New home base at Carnegie Mellon'
+    alt: 'Standing in front of the Carnegie Mellon University sign'
   },
   {
     src: '/photos/cvip.jpg',
-    alt: 'At the CVIP 2022 conference',
-    caption: 'Presenting my first paper at CVIP 2022'
+    alt: 'At the CVIP 2022 conference'
   }
 ]
 
@@ -23,18 +21,18 @@ const gridPhotos: Photo[] = [
   },
   {
     src: '/photos/hobbies/fishing_05___PM_png.jpg',
-    alt: 'Holding a coral trout on a boat',
-    caption: 'Coral trout, calm seas, loud shirt'
+    alt: 'Holding a moon tailed grouper on a boat',
+    caption: 'Moon tailed grouper'
   },
   {
     src: '/photos/hobbies/fishing_18___PM_png.jpg',
     alt: 'Holding a king mackerel on a boat',
-    caption: 'King mackerel, fresh off the fight'
+    caption: 'King mackerel'
   },
   {
     src: '/photos/hobbies/fishing_32___PM_png.jpg',
     alt: 'Holding a giant trevally on a boat',
-    caption: 'Giant trevally, the ocean’s heavyweight'
+    caption: 'Giant trevally'
   }
 ]
 
@@ -57,7 +55,6 @@ export function PhotoMosaic() {
           className="object-cover"
           sizes="(max-width: 640px) 100vw, 66vw"
         />
-        <Caption text={featurePhotos[0].caption} />
       </div>
 
       <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
@@ -68,7 +65,6 @@ export function PhotoMosaic() {
           className="object-cover"
           sizes="(max-width: 640px) 100vw, 34vw"
         />
-        <Caption text={featurePhotos[1].caption} />
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:col-span-3 sm:grid-cols-4">
@@ -78,7 +74,7 @@ export function PhotoMosaic() {
             className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-white/5"
           >
             <Image src={p.src} alt={p.alt} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" />
-            <Caption text={p.caption} />
+            {p.caption ? <Caption text={p.caption} /> : null}
           </div>
         ))}
       </div>
