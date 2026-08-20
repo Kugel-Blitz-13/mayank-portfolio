@@ -22,7 +22,7 @@ export function TerminalCard() {
     : '··:··:··'
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-black/40 p-4 font-mono text-xs">
+    <div className="rounded-3xl border border-white/10 bg-black/40 p-4 font-mono text-xs backdrop-blur-xl">
       <div className="flex items-center gap-1.5 border-b border-white/10 pb-2.5">
         <span className="h-2 w-2 rounded-full bg-red-400/70" />
         <span className="h-2 w-2 rounded-full bg-yellow-400/70" />

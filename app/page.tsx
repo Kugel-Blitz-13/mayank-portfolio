@@ -65,19 +65,19 @@ export default function HomePage() {
               </div>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="glass rounded-2xl p-4">
                   <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Focus</p>
                   <p className="mt-2 text-sm text-white/75">
                     LLM agents, RAG, evaluation, data engineering, cloud deployment
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="glass rounded-2xl p-4">
                   <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Stack</p>
                   <p className="mt-2 text-sm text-white/75">
                     Python, Spark, GCP, PostgreSQL, Docker, Next.js, Mapbox
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="glass rounded-2xl p-4">
                   <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Now</p>
                   <p className="mt-2 text-sm text-white/75">
                     Quant work in power markets + Boeing funded research on MCP agent tooling
@@ -88,7 +88,7 @@ export default function HomePage() {
 
             <div className="space-y-4">
               <Tilt>
-                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-2">
+                <div className="glass relative overflow-hidden rounded-3xl p-2">
                   <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
                     <Image
                       src="/photos/headshot.jpg"
@@ -145,7 +145,7 @@ export default function HomePage() {
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
           {featuredProjects.map((p, i) => (
-            <Reveal key={p.slug} delay={(i % 2) * 0.08}>
+            <Reveal key={p.slug} delay={(i % 2) * 0.08} className="h-full">
               <ProjectCard project={p} />
             </Reveal>
           ))}
@@ -162,7 +162,7 @@ export default function HomePage() {
               href="https://www.researchgate.net/publication/370587091_Structure-Based_Learning_for_Robust_Defense_Against_Adversarial_Attacks_in_Autonomous_Driving_Agents"
               target="_blank"
               rel="noreferrer"
-              className="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:border-white/20 hover:bg-white/[0.07]"
+              className="glass rounded-3xl p-6 transition hover:border-white/25"
             >
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Robotics • Adversarial ML</p>
               <h3 className="mt-2 text-base font-semibold text-white">
@@ -175,7 +175,7 @@ export default function HomePage() {
               href="https://ieeexplore.ieee.org/document/10306508/"
               target="_blank"
               rel="noreferrer"
-              className="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:border-white/20 hover:bg-white/[0.07]"
+              className="glass rounded-3xl p-6 transition hover:border-white/25"
             >
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Signal Processing • ViT</p>
               <h3 className="mt-2 text-base font-semibold text-white">
@@ -191,7 +191,7 @@ export default function HomePage() {
         <Container>
           <SectionHeading kicker="About" title="How I build" />
           <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:col-span-2">
+            <div className="glass rounded-3xl p-6 md:col-span-2">
               <p className="text-white/75">
                 I like projects where the hard part is the system: messy data, real-time constraints,
                 ambiguous objectives, and shipping something that holds up in production.
@@ -222,7 +222,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div className="glass rounded-3xl p-6">
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Links</p>
               <div className="mt-4 space-y-2 text-sm">
                 <a className="block text-white/80 hover:text-white" href="https://www.linkedin.com/in/mayank-dixit-max007/" target="_blank" rel="noreferrer">
@@ -259,9 +259,12 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <footer className="border-t border-white/10 py-10">
+      <footer className="overflow-hidden border-t border-white/10 pb-10 pt-14">
         <Container>
-          <div className="flex flex-col gap-2 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-outline select-none whitespace-nowrap text-center font-space text-[11.5vw] font-bold leading-none tracking-tight sm:text-[7.5vw]">
+            MAYANK DIXIT
+          </p>
+          <div className="mt-10 flex flex-col gap-2 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
             <p>© {new Date().getFullYear()} Mayank Dixit</p>
             <p className="text-white/50">Built with Next.js + Tailwind</p>
           </div>

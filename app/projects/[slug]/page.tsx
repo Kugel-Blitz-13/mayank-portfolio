@@ -58,7 +58,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         </div>
 
         {p.hero ? (
-          <div className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-2">
+          <div className="glass mt-10 overflow-hidden rounded-3xl p-2">
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
               {p.hero.kind === 'video' ? (
                 <VideoHero src={p.hero.src} poster={p.hero.poster} />
@@ -78,7 +78,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         ) : null}
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:col-span-2">
+          <div className="glass rounded-3xl p-6 md:col-span-2">
             <p className="text-sm text-white/75">{p.summary}</p>
 
             <p className="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-white/50">

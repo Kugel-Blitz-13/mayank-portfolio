@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${space.variable} dark`}>
       <body className="min-h-screen bg-bg text-text">
         <div className="pointer-events-none fixed inset-0 bg-grid" />
+        <div className="pointer-events-none fixed inset-0 bg-aurora" />
         <div className="pointer-events-none fixed inset-0 bg-glow opacity-80" />
         <Navbar />
         <CommandPalette />

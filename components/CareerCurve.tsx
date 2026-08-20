@@ -112,7 +112,7 @@ export function CareerCurve() {
 
   return (
     <div>
-      <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
+      <div className="glass rounded-3xl p-4 sm:p-6">
         <svg viewBox="0 0 1000 332" className="w-full" role="img" aria-label="Career timeline drawn as a rising load curve">
           <defs>
             <linearGradient id="ccLine" x1="0" y1="0" x2="1" y2="0">
@@ -215,7 +215,7 @@ export function CareerCurve() {
         ))}
       </div>
 
-      <div className="mt-4 min-h-[132px] rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div className="glass mt-4 min-h-[132px] rounded-3xl p-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.year}

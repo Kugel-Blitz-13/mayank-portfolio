@@ -32,7 +32,7 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
       onMouseMove={onMouseMove}
       href={`/projects/${project.slug}`}
       className={clsx(
-        'group relative block overflow-hidden rounded-2xl border border-white/10 bg-[rgb(var(--card))] shadow-glow transition hover:border-white/20',
+        'glass group relative flex h-full flex-col overflow-hidden rounded-2xl transition hover:border-white/25',
         compact && 'p-5',
         !compact && 'p-6'
       )}
@@ -63,7 +63,7 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
         </div>
       ) : null}
 
-      <div className="relative">
+      <div className="relative flex flex-1 flex-col">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="text-base font-semibold tracking-tight text-white">
@@ -80,7 +80,7 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
           {project.summary}
         </p>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-auto flex flex-wrap gap-2 pt-5">
           {project.tags.slice(0, compact ? 4 : 6).map((t) => (
             <Pill key={t}>{t}</Pill>
           ))}
