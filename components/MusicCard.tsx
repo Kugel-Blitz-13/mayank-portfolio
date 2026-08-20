@@ -11,21 +11,20 @@ type TopArtist = {
   }
 }
 
-const HIDDEN_ARTISTS = ['cigarettes after sex']
+// keeps the panel recruiter safe: artist names containing these words are skipped
+const EXPLICIT_WORDS = /\b(fuck|sex|shit|bitch|cunt|porn|nigga|whore|slut|dick)\b/i
 
 async function getTopArtists(range: 'weeks' | 'lifetime'): Promise<TopArtist[] | null> {
   try {
     const res = await fetch(
-      `https://api.stats.fm/api/v1/users/kugelblitz/top/artists?range=${range}&limit=8`,
+      `https://api.stats.fm/api/v1/users/kugelblitz/top/artists?range=${range}&limit=12`,
       { next: { revalidate: REVALIDATE_SECONDS } }
     )
     if (!res.ok) return null
     const data = await res.json()
     if (!Array.isArray(data?.items) || data.items.length === 0) return null
     const items = data.items as TopArtist[]
-    return items
-      .filter((a) => !HIDDEN_ARTISTS.includes(a.artist.name.toLowerCase()))
-      .slice(0, 4)
+    return items.filter((a) => !EXPLICIT_WORDS.test(a.artist.name)).slice(0, 6)
   } catch {
     return null
   }
@@ -33,7 +32,7 @@ async function getTopArtists(range: 'weeks' | 'lifetime'): Promise<TopArtist[] |
 
 function ArtistGrid({ artists }: { artists: TopArtist[] }) {
   return (
-    <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
       {artists.map((a) => (
         <div
           key={a.artist.name}
