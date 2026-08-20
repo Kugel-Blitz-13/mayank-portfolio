@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import clsx from 'clsx'
+import { useRef, type MouseEvent } from 'react'
 import { VideoHero } from '@/components/VideoHero'
 import type { Project } from '@/data/projects'
 
@@ -13,8 +16,20 @@ function Pill({ children }: { children: string }) {
 }
 
 export function ProjectCard({ project, compact }: { project: Project; compact?: boolean }) {
+  const ref = useRef<HTMLAnchorElement>(null)
+
+  function onMouseMove(e: MouseEvent<HTMLAnchorElement>) {
+    const el = ref.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    el.style.setProperty('--my', `${e.clientY - r.top}px`)
+  }
+
   return (
     <Link
+      ref={ref}
+      onMouseMove={onMouseMove}
       href={`/projects/${project.slug}`}
       className={clsx(
         'group relative overflow-hidden rounded-2xl border border-white/10 bg-[rgb(var(--card))] shadow-glow transition hover:border-white/20',
@@ -22,9 +37,13 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
         !compact && 'p-6'
       )}
     >
-      <div className="absolute inset-0 opacity-0 transition group-hover:opacity-100">
-        <div className="glow" />
-      </div>
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background:
+            'radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(45,212,191,0.10), transparent 65%)'
+        }}
+      />
 
       {project.hero?.kind === 'image' && !compact ? (
         <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-xl border border-white/10">

@@ -1,0 +1,86 @@
+const STATSFM_PROFILE = 'https://stats.fm/kugelblitz'
+
+type TopArtist = {
+  position: number
+  streams: number
+  artist: {
+    name: string
+    image?: string
+    genres?: string[]
+  }
+}
+
+async function getTopArtists(): Promise<TopArtist[] | null> {
+  try {
+    const res = await fetch(
+      'https://api.stats.fm/api/v1/users/kugelblitz/top/artists?range=weeks&limit=6',
+      { next: { revalidate: 3600 } }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    if (!Array.isArray(data?.items) || data.items.length === 0) return null
+    return data.items.slice(0, 6) as TopArtist[]
+  } catch {
+    return null
+  }
+}
+
+export async function MusicCard() {
+  const artists = await getTopArtists()
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
+            The soundtrack
+          </p>
+          <h3 className="mt-2 text-base font-semibold text-white">On repeat this week</h3>
+        </div>
+        <a
+          href={STATSFM_PROFILE}
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
+        >
+          Full stats on stats.fm →
+        </a>
+      </div>
+
+      {artists ? (
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {artists.map((a) => (
+            <div
+              key={a.artist.name}
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-center"
+            >
+              {a.artist.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={a.artist.image}
+                  alt={a.artist.name}
+                  className="mx-auto h-16 w-16 rounded-full border border-white/10 object-cover"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white/40">
+                  ♪
+                </div>
+              )}
+              <p className="mt-2 truncate text-sm font-medium text-white">{a.artist.name}</p>
+              <p className="mt-0.5 text-xs text-white/45">{a.streams} plays</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-4 text-sm text-white/60">
+          Live listening data is taking a break. The full picture lives on my stats.fm page.
+        </p>
+      )}
+
+      <p className="mt-4 text-xs text-white/40">
+        Pulled live from my Spotify history via stats.fm, refreshed hourly.
+      </p>
+    </div>
+  )
+}

@@ -4,6 +4,11 @@ import { Container } from '@/components/Container'
 import { SectionHeading } from '@/components/SectionHeading'
 import { ProjectCard } from '@/components/ProjectCard'
 import { PhotoMosaic } from '@/components/PhotoMosaic'
+import { TypedWords } from '@/components/TypedWords'
+import { StatTicker } from '@/components/StatTicker'
+import { CareerCurve } from '@/components/CareerCurve'
+import { MusicCard } from '@/components/MusicCard'
+import { Reveal } from '@/components/Reveal'
 import { featuredProjects } from '@/data/projects'
 
 export default function HomePage() {
@@ -17,8 +22,19 @@ export default function HomePage() {
                 Agentic AI • ML Platforms • Clean-Tech Optimization
               </p>
 
-              <h1 className="mt-4 text-balance font-space text-4xl font-semibold leading-[1.05] sm:text-6xl">
-                AI Engineer building agentic systems + ML platforms.
+              <h1 className="mt-4 text-balance font-space text-4xl font-semibold leading-[1.1] sm:text-6xl">
+                Machine learning for{' '}
+                <span className="block min-h-[1.2em] bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent">
+                  <TypedWords
+                    words={[
+                      'power markets.',
+                      'load forecasting.',
+                      'agentic systems.',
+                      'solar fleets.',
+                      'the real grid.'
+                    ]}
+                  />
+                </span>
               </h1>
 
               <p className="mt-5 max-w-xl text-pretty text-base text-white/70 sm:text-lg">
@@ -28,7 +44,7 @@ export default function HomePage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/projects"
-                  className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:opacity-20"
+                  className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:opacity-90"
                 >
                   View projects
                 </Link>
@@ -86,6 +102,27 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <section className="mt-14 border-y border-white/10 bg-white/[0.02] sm:mt-20">
+        <StatTicker />
+      </section>
+
+      <section id="experience" className="pt-16 sm:pt-24">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              kicker="Experience"
+              title="Career, plotted like a load curve"
+            />
+            <p className="mt-3 max-w-2xl text-sm text-white/60">
+              Hover the peaks or pick a year. The y axis is ambition, roughly to scale.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-8">
+            <CareerCurve />
+          </Reveal>
+        </Container>
+      </section>
+
       <section className="pt-16 sm:pt-24">
         <Container>
           <SectionHeading
@@ -102,8 +139,10 @@ export default function HomePage() {
           />
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {featuredProjects.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
+          {featuredProjects.map((p, i) => (
+            <Reveal key={p.slug} delay={(i % 2) * 0.08}>
+              <ProjectCard project={p} />
+            </Reveal>
           ))}
           </div>
         </Container>
@@ -203,7 +242,14 @@ export default function HomePage() {
             I like building prototypes, traveling for conferences, getting out on the water, and as of this summer, racing triathlons.
           </p>
           <div className="mt-8">
-            <PhotoMosaic />
+            <Reveal>
+              <PhotoMosaic />
+            </Reveal>
+          </div>
+          <div className="mt-4">
+            <Reveal delay={0.1}>
+              <MusicCard />
+            </Reveal>
           </div>
         </Container>
       </section>
