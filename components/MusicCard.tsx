@@ -1,4 +1,5 @@
 const STATSFM_PROFILE = 'https://stats.fm/kugelblitz'
+const REVALIDATE_SECONDS = 604800 // refreshed weekly
 
 type TopArtist = {
   position: number
@@ -10,11 +11,11 @@ type TopArtist = {
   }
 }
 
-async function getTopArtists(): Promise<TopArtist[] | null> {
+async function getTopArtists(range: 'weeks' | 'lifetime'): Promise<TopArtist[] | null> {
   try {
     const res = await fetch(
-      'https://api.stats.fm/api/v1/users/kugelblitz/top/artists?range=weeks&limit=6',
-      { next: { revalidate: 3600 } }
+      `https://api.stats.fm/api/v1/users/kugelblitz/top/artists?range=${range}&limit=6`,
+      { next: { revalidate: REVALIDATE_SECONDS } }
     )
     if (!res.ok) return null
     const data = await res.json()
@@ -25,8 +26,40 @@ async function getTopArtists(): Promise<TopArtist[] | null> {
   }
 }
 
+function ArtistGrid({ artists }: { artists: TopArtist[] }) {
+  return (
+    <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      {artists.map((a) => (
+        <div
+          key={a.artist.name}
+          className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-center"
+        >
+          {a.artist.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={a.artist.image}
+              alt={a.artist.name}
+              className="mx-auto h-16 w-16 rounded-full border border-white/10 object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white/40">
+              ♪
+            </div>
+          )}
+          <p className="mt-2 truncate text-sm font-medium text-white">{a.artist.name}</p>
+          <p className="mt-0.5 text-xs text-white/45">{a.streams.toLocaleString('en-US')} plays</p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export async function MusicCard() {
-  const artists = await getTopArtists()
+  const [recent, lifetime] = await Promise.all([
+    getTopArtists('weeks'),
+    getTopArtists('lifetime')
+  ])
 
   return (
     <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
@@ -35,7 +68,7 @@ export async function MusicCard() {
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
             The soundtrack
           </p>
-          <h3 className="mt-2 text-base font-semibold text-white">On repeat this week</h3>
+          <h3 className="mt-2 text-base font-semibold text-white">On repeat, last 4 weeks</h3>
         </div>
         <a
           href={STATSFM_PROFILE}
@@ -47,39 +80,27 @@ export async function MusicCard() {
         </a>
       </div>
 
-      {artists ? (
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {artists.map((a) => (
-            <div
-              key={a.artist.name}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-center"
-            >
-              {a.artist.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={a.artist.image}
-                  alt={a.artist.name}
-                  className="mx-auto h-16 w-16 rounded-full border border-white/10 object-cover"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white/40">
-                  ♪
-                </div>
-              )}
-              <p className="mt-2 truncate text-sm font-medium text-white">{a.artist.name}</p>
-              <p className="mt-0.5 text-xs text-white/45">{a.streams} plays</p>
-            </div>
-          ))}
-        </div>
+      {recent ? (
+        <ArtistGrid artists={recent} />
       ) : (
         <p className="mt-4 text-sm text-white/60">
           Live listening data is taking a break. The full picture lives on my stats.fm page.
         </p>
       )}
 
-      <p className="mt-4 text-xs text-white/40">
-        Pulled live from my Spotify history via stats.fm, refreshed hourly.
+      <div className="mt-7 border-t border-white/10 pt-6">
+        <h3 className="text-base font-semibold text-white">All time heavy rotation</h3>
+        {lifetime ? (
+          <ArtistGrid artists={lifetime} />
+        ) : (
+          <p className="mt-4 text-sm text-white/60">
+            Lifetime numbers are hiding right now. They live on my stats.fm page too.
+          </p>
+        )}
+      </div>
+
+      <p className="mt-5 text-xs text-white/40">
+        Pulled from my Spotify history via stats.fm, refreshed weekly.
       </p>
     </div>
   )
