@@ -9,7 +9,7 @@ const nav = [
   { href: '/#experience', label: 'Experience' },
   { href: '/projects', label: 'Projects' },
   { href: '/#about', label: 'About' },
-  { href: '/beyond', label: 'Beyond Work' }
+  { href: '/#beyond', label: 'Beyond Work' }
 ]
 
 export function Navbar() {

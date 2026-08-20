@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { SectionHeading } from '@/components/SectionHeading'
 import { ProjectCard } from '@/components/ProjectCard'
+import { PhotoMosaic } from '@/components/PhotoMosaic'
+import { PhotoGallery } from '@/components/PhotoGallery'
+import { MusicCard } from '@/components/MusicCard'
 import { TypedWords } from '@/components/TypedWords'
 import { StatTicker } from '@/components/StatTicker'
 import { CareerCurve } from '@/components/CareerCurve'
@@ -238,24 +241,30 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section className="pt-16 pb-20 sm:pt-24">
+      <section id="beyond" className="pt-16 pb-20 sm:pt-24">
         <Container>
-          <Reveal>
-            <div className="glass flex flex-col items-start justify-between gap-4 rounded-3xl p-6 sm:flex-row sm:items-center">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Beyond work</p>
-                <p className="mt-2 text-sm text-white/75">
-                  Fishing, a first triathlon, and what the desk sounds like. The human side lives on its own page.
-                </p>
+          <SectionHeading kicker="Beyond work" title="Things I do when I’m not coding" />
+          <p className="mt-4 max-w-2xl text-sm text-white/70">
+            I like building prototypes, traveling for conferences, getting out on the water, and as of this summer, racing triathlons.
+          </p>
+          <div className="mt-8">
+            <Reveal>
+              <PhotoMosaic />
+            </Reveal>
+          </div>
+          <div className="mt-10">
+            <Reveal>
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Through the lens</p>
+              <div className="mt-4">
+                <PhotoGallery />
               </div>
-              <Link
-                href="/beyond"
-                className="shrink-0 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:opacity-90"
-              >
-                Meet the human →
-              </Link>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
+          <div className="mt-10">
+            <Reveal delay={0.1}>
+              <MusicCard />
+            </Reveal>
+          </div>
         </Container>
       </section>
 

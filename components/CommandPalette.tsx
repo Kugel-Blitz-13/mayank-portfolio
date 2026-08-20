@@ -11,7 +11,7 @@ const ACTIONS: Action[] = [
   { label: 'Experience: the career load curve', hint: 'section', href: '/#experience' },
   { label: 'All projects', hint: 'page', href: '/projects' },
   { label: 'About: how I build', hint: 'section', href: '/#about' },
-  { label: 'Beyond work: photos + music', hint: 'page', href: '/beyond' },
+  { label: 'Beyond work: photos + music', hint: 'section', href: '/#beyond' },
   { label: 'Download resume', hint: 'pdf', href: '/docs/Mayank_Dixit_Resume.pdf', external: true },
   { label: 'Email Mayank', hint: 'contact', href: 'mailto:mayankdixit132001@gmail.com', external: true },
   { label: 'LinkedIn', hint: 'link', href: 'https://www.linkedin.com/in/mayank-dixit-max007/', external: true },
