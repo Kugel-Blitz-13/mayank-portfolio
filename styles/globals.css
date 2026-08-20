@@ -70,32 +70,32 @@ body {
   height: 800px;
   left: -14%;
   top: -6%;
-  background: radial-gradient(circle closest-side, rgba(45, 212, 191, 0.42), rgba(45, 212, 191, 0.14) 45%, transparent 70%);
-  animation: orbFloatA 26s ease-in-out infinite alternate;
+  background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.34), rgba(45, 212, 191, 0.44) 20%, rgba(45, 212, 191, 0.14) 50%, transparent 70%);
+  animation: orbFloatA 14s ease-in-out infinite alternate;
 }
 .orb-b {
   width: 920px;
   height: 920px;
   right: -18%;
   top: 8%;
-  background: radial-gradient(circle closest-side, rgba(96, 165, 250, 0.4), rgba(96, 165, 250, 0.13) 45%, transparent 70%);
-  animation: orbFloatB 32s ease-in-out infinite alternate;
+  background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.32), rgba(96, 165, 250, 0.42) 20%, rgba(96, 165, 250, 0.13) 50%, transparent 70%);
+  animation: orbFloatB 18s ease-in-out infinite alternate;
 }
 .orb-c {
   width: 1000px;
   height: 1000px;
   left: 46%;
   bottom: -28%;
-  background: radial-gradient(circle closest-side, rgba(129, 140, 248, 0.38), rgba(129, 140, 248, 0.13) 45%, transparent 70%);
-  animation: orbFloatC 38s ease-in-out infinite alternate;
+  background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.3), rgba(129, 140, 248, 0.4) 20%, rgba(129, 140, 248, 0.13) 50%, transparent 70%);
+  animation: orbFloatC 20s ease-in-out infinite alternate;
 }
 .orb-d {
   width: 600px;
   height: 600px;
   left: -8%;
   bottom: -4%;
-  background: radial-gradient(circle closest-side, rgba(56, 189, 248, 0.34), rgba(56, 189, 248, 0.11) 45%, transparent 70%);
-  animation: orbFloatD 22s ease-in-out infinite alternate;
+  background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.3), rgba(56, 189, 248, 0.38) 20%, rgba(56, 189, 248, 0.11) 50%, transparent 70%);
+  animation: orbFloatD 12s ease-in-out infinite alternate;
 }
 @keyframes orbFloatA {
   from { transform: translate3d(0, 0, 0) scale(1); }
