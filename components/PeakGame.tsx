@@ -23,17 +23,24 @@ function yToMw(y: number) {
   return MW_MIN + ((Y0 - y) * (MW_MAX - MW_MIN)) / (Y0 - Y1)
 }
 
-function genCurve(round: number): number[] {
-  const heat = 0.7 + Math.random() * (0.45 + round * 0.14)
+function genCurve(heat: number, round: number): number[] {
   const out: number[] = []
   for (let h = 0; h < 24; h++) {
     const base = 68 + 3 * Math.sin((h / 24) * Math.PI * 2)
     const morning = 7 * Math.exp(-Math.pow(h - 8, 2) / 7)
     const evening = 19 * heat * Math.exp(-Math.pow(h - 18.5, 2) / 7)
-    const noise = (Math.random() - 0.5) * (1.4 + round * 0.5)
+    const noise = (Math.random() - 0.5) * (1.2 + round * 0.3)
     out.push(Math.min(MW_MAX - 2, base + morning + evening + noise))
   }
   return out
+}
+
+function weatherNote(delta: number): string {
+  if (delta > 0.12) return 'wx desk: noticeably hotter than yesterday'
+  if (delta > 0.03) return 'wx desk: a touch hotter than yesterday'
+  if (delta < -0.12) return 'wx desk: noticeably cooler than yesterday'
+  if (delta < -0.03) return 'wx desk: a touch cooler than yesterday'
+  return 'wx desk: about the same as yesterday'
 }
 
 function curvePath(curve: number[]): string {
@@ -67,11 +74,16 @@ export function PeakGame({ plain }: { plain?: boolean }) {
   const [modelTotal, setModelTotal] = useState(0)
   const [lastUserErr, setLastUserErr] = useState(0)
   const [best, setBest] = useState<number | null>(null)
+  const [wx, setWx] = useState('')
 
   const newDay = (r: number) => {
-    setYesterday(genCurve(r))
-    setToday(genCurve(r))
-    setModelErr(0.4 + Math.random() * (1.0 + r * 0.35))
+    const heatY = 0.7 + Math.random() * (0.45 + r * 0.08)
+    const delta = (Math.random() - 0.5) * (0.28 + r * 0.08)
+    const heatT = Math.min(1.5, Math.max(0.55, heatY + delta))
+    setYesterday(genCurve(heatY, r))
+    setToday(genCurve(heatT, r))
+    setWx(weatherNote(delta))
+    setModelErr(0.8 + Math.random() * (1.3 + r * 0.3))
     setGuess(null)
     setPhase('guess')
   }
@@ -148,6 +160,11 @@ export function PeakGame({ plain }: { plain?: boolean }) {
           </span>
         ) : null}
         <span className="text-white/35">lower is better</span>
+        {phase === 'guess' && wx ? (
+          <span className="rounded-full border border-yellow-400/25 bg-yellow-400/10 px-3 py-1 text-yellow-200/80">
+            {wx}
+          </span>
+        ) : null}
       </div>
 
       {phase === 'done' ? (
@@ -158,7 +175,7 @@ export function PeakGame({ plain }: { plain?: boolean }) {
           <p className="max-w-md text-sm text-white/65">
             {userTotal < modelTotal
               ? `Total error ${userTotal.toFixed(1)} vs the model's ${modelTotal.toFixed(1)}. Genuinely impressive. My inbox is open.`
-              : `Your total error: ${userTotal.toFixed(1)}. The model: ${modelTotal.toFixed(1)}. It does this every morning before you wake up.`}
+              : `Your total error: ${userTotal.toFixed(1)}. The model: ${modelTotal.toFixed(1)}. Braver souls have tried. It remains undefeated in production.`}
           </p>
           <button
             type="button"

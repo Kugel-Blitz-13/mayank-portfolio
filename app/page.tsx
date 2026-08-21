@@ -42,7 +42,8 @@ export default async function HomePage() {
   const lastShip = await getLastShip()
   return (
     <main>
-      <section className="pt-14 sm:pt-20">
+      <section className="relative pt-14 sm:pt-20">
+        <PixelDrift />
         <Container>
           <div className="grid items-start gap-10 md:grid-cols-[1.2fr_0.8fr]">
             <div>
@@ -184,7 +185,8 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section className="pt-16 sm:pt-24">
+      <section className="relative pt-16 sm:pt-24">
+        <PixelDrift />
         <Container>
           <SectionHeading
             kicker="A few work examples"
@@ -209,7 +211,8 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section className="pt-16 sm:pt-24">
+      <section className="relative pt-16 sm:pt-24">
+        <PixelDrift />
         <Container>
           <SectionHeading kicker="Publications" title="Selected papers" />
 
@@ -243,7 +246,8 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section id="about" className="pt-16 sm:pt-24">
+      <section id="about" className="relative pt-16 sm:pt-24">
+        <PixelDrift />
         <Container>
           <SectionHeading kicker="About" title="How I build" />
           <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -303,7 +307,7 @@ export default async function HomePage() {
             <p className="font-pixel text-[10px] tracking-wider text-accent/70">INSERT COIN</p>
             <SectionHeading kicker="Interactive" title="The arcade" />
             <p className="mt-3 max-w-2xl text-sm text-white/60">
-              Two games. Beat the forecast is the one I played all summer, minus the money: five days against the model, cumulative error. Tech wordle is six tries at a five letter word from the world of code and AI, with hints when you struggle.
+              Three games. Tech wordle: six tries at a five letter word from code and AI, with hints when you struggle. Bit flip: match the binary before the clock runs out. Beat the forecast: five days against the model, the game I played all summer minus the money.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
@@ -340,7 +344,8 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <footer className="overflow-hidden border-t border-white/10 pb-10 pt-14">
+      <footer className="relative overflow-hidden border-t border-white/10 pb-10 pt-14">
+        <PixelDrift />
         <Container>
           <p className="text-outline select-none whitespace-nowrap text-center font-space text-[11.5vw] font-bold leading-none tracking-tight sm:text-[7.5vw]">
             MAYANK DIXIT
