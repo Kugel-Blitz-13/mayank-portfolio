@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-export function TerminalCard() {
+export function TerminalCard({ lastShip }: { lastShip?: string | null }) {
   const [now, setNow] = useState<Date | null>(null)
   const [hz, setHz] = useState('60.00')
 
@@ -54,6 +54,11 @@ export function TerminalCard() {
         <p>
           <span className="text-accent">&gt;</span> grid frequency: {hz} Hz
         </p>
+        {lastShip ? (
+          <p>
+            <span className="text-accent">&gt;</span> last shipped: {lastShip}
+          </p>
+        ) : null}
         <p>
           <span className="text-accent">&gt;</span> uptime: 3 publications, 0 unhandled exceptions
           <span className="caret text-accent">▊</span>

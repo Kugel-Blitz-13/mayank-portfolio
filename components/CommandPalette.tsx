@@ -17,7 +17,8 @@ const ACTIONS: Action[] = [
   { label: 'LinkedIn', hint: 'link', href: 'https://www.linkedin.com/in/mayank-dixit-max007/', external: true },
   { label: 'GitHub', hint: 'link', href: 'https://github.com/Kugel-Blitz-13', external: true },
   { label: 'Listening stats on stats.fm', hint: 'link', href: 'https://stats.fm/kugelblitz', external: true },
-  { label: 'Simulate a grid event', hint: 'easter egg', href: '#grid-event' }
+  { label: 'Simulate a grid event', hint: 'easter egg', href: '#grid-event' },
+  { label: 'Toggle CRT desk mode', hint: 'easter egg', href: '#crt' }
 ]
 
 export function CommandPalette() {
@@ -69,6 +70,10 @@ export function CommandPalette() {
     setOpen(false)
     if (a.href === '#grid-event') {
       window.dispatchEvent(new Event('grid:blackout'))
+      return
+    }
+    if (a.href === '#crt') {
+      window.dispatchEvent(new Event('crt:toggle'))
       return
     }
     if (a.external) {

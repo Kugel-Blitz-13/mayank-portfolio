@@ -138,7 +138,7 @@ export function CareerCurve() {
             fill="rgba(255,255,255,0.35)"
             transform="rotate(-90 24 182)"
           >
-            ambition ↑
+            ambition →
           </text>
           <text x={998} y={304} textAnchor="end" fontSize={13} fill="rgba(255,255,255,0.35)">
             years →

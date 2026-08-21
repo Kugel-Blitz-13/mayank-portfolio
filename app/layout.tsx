@@ -6,6 +6,8 @@ import { Navbar } from '@/components/Navbar'
 import { CommandPalette } from '@/components/CommandPalette'
 import { GridEvent } from '@/components/GridEvent'
 import { ScrollProgress } from '@/components/ScrollProgress'
+import { CrtMode } from '@/components/CrtMode'
+import { ConsoleEgg } from '@/components/ConsoleEgg'
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -27,6 +29,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <CommandPalette />
         <GridEvent />
+        <CrtMode />
+        <ConsoleEgg />
         {children}
         <Analytics />
         <SpeedInsights />

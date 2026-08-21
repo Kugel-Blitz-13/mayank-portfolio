@@ -10,11 +10,34 @@ import { TypedWords } from '@/components/TypedWords'
 import { StatTicker } from '@/components/StatTicker'
 import { CareerCurve } from '@/components/CareerCurve'
 import { TerminalCard } from '@/components/TerminalCard'
+import { PeakGame } from '@/components/PeakGame'
 import { Tilt } from '@/components/Tilt'
 import { Reveal } from '@/components/Reveal'
 import { featuredProjects } from '@/data/projects'
 
-export default function HomePage() {
+type GitHubEvent = { type: string; repo?: { name?: string }; created_at: string }
+
+async function getLastShip(): Promise<string | null> {
+  try {
+    const res = await fetch('https://api.github.com/users/Kugel-Blitz-13/events/public', {
+      next: { revalidate: 3600 }
+    })
+    if (!res.ok) return null
+    const events = (await res.json()) as GitHubEvent[]
+    if (!Array.isArray(events)) return null
+    const push = events.find((e) => e.type === 'PushEvent')
+    if (!push) return null
+    const repo = push.repo?.name?.split('/')[1] ?? 'github'
+    const hours = Math.max(1, Math.round((Date.now() - new Date(push.created_at).getTime()) / 3600000))
+    const when = hours < 24 ? `${hours}h ago` : `${Math.round(hours / 24)}d ago`
+    return `${when}, ${repo}`
+  } catch {
+    return null
+  }
+}
+
+export default async function HomePage() {
+  const lastShip = await getLastShip()
   return (
     <main>
       <section className="pt-14 sm:pt-20">
@@ -102,7 +125,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </Tilt>
-              <TerminalCard />
+              <TerminalCard lastShip={lastShip} />
             </div>
           </div>
         </Container>
@@ -125,6 +148,20 @@ export default function HomePage() {
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
             <CareerCurve />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="pt-16 sm:pt-24">
+        <Container>
+          <Reveal>
+            <SectionHeading kicker="Interactive" title="Beat the forecast" />
+            <p className="mt-3 max-w-2xl text-sm text-white/60">
+              This is the game I played all summer, minus the money. The dashed line is yesterday. One click to call today's peak, then see what actually happened. The model plays too.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-8">
+            <PeakGame />
           </Reveal>
         </Container>
       </section>
