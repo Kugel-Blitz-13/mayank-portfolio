@@ -11,7 +11,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Arial"],
-        space: ["var(--font-space)", "var(--font-inter)", "system-ui"]
+        space: ["var(--font-space)", "var(--font-inter)", "system-ui"],
+        pixel: ["var(--font-pixel)", "monospace"]
       },
       colors: {
         bg: 'rgb(var(--bg))',

@@ -108,6 +108,22 @@ body {
   .caret { animation: none; }
 }
 
+/* 8 bit drifting artifacts */
+.pixel-drift {
+  left: -12%;
+  animation-name: pixelDriftAcross;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  white-space: nowrap;
+}
+@keyframes pixelDriftAcross {
+  from { transform: translateX(0); }
+  to { transform: translateX(118vw); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pixel-drift { animation: none; visibility: hidden; }
+}
+
 /* Nice scrollbar */
 * {
   scrollbar-width: thin;

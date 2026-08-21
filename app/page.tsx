@@ -10,7 +10,8 @@ import { TypedWords } from '@/components/TypedWords'
 import { StatTicker } from '@/components/StatTicker'
 import { CareerCurve } from '@/components/CareerCurve'
 import { TerminalCard } from '@/components/TerminalCard'
-import { PeakGame } from '@/components/PeakGame'
+import { GameArcade } from '@/components/GameArcade'
+import { PixelDrift } from '@/components/PixelDrift'
 import { WorkTimeline } from '@/components/WorkTimeline'
 import { Tilt } from '@/components/Tilt'
 import { Reveal } from '@/components/Reveal'
@@ -295,21 +296,24 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section className="pt-16 sm:pt-24">
+      <section id="arcade" className="relative pt-16 sm:pt-24">
+        <PixelDrift />
         <Container>
           <Reveal>
-            <SectionHeading kicker="Interactive" title="Beat the forecast" />
+            <p className="font-pixel text-[10px] tracking-wider text-accent/70">INSERT COIN</p>
+            <SectionHeading kicker="Interactive" title="The arcade" />
             <p className="mt-3 max-w-2xl text-sm text-white/60">
-              This is the game I played all summer, minus the money. Five days, you against the model, cumulative error. The weather gets wilder as the week goes on.
+              Two games. Beat the forecast is the one I played all summer, minus the money: five days against the model, cumulative error. Tech wordle is six tries at a five letter word from the world of code and AI, with hints when you struggle.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
-            <PeakGame />
+            <GameArcade />
           </Reveal>
         </Container>
       </section>
 
-      <section id="beyond" className="pt-16 pb-20 sm:pt-24">
+      <section id="beyond" className="relative pt-16 pb-20 sm:pt-24">
+        <PixelDrift />
         <Container>
           <SectionHeading kicker="Beyond work" title="Things I do when I’m not coding" />
           <p className="mt-4 max-w-2xl text-sm text-white/70">

@@ -56,7 +56,7 @@ function curvePath(curve: number[]): string {
 type Guess = { x: number; y: number }
 type Phase = 'guess' | 'revealed' | 'done'
 
-export function PeakGame() {
+export function PeakGame({ plain }: { plain?: boolean }) {
   const [round, setRound] = useState(1)
   const [yesterday, setYesterday] = useState<number[] | null>(null)
   const [today, setToday] = useState<number[] | null>(null)
@@ -131,7 +131,7 @@ export function PeakGame() {
   const modelMW = peakMW * (1 + modelErr / 100)
 
   return (
-    <div className="glass rounded-3xl p-4 sm:p-6">
+    <div className={plain ? undefined : 'glass rounded-3xl p-4 sm:p-6'}>
       <div className="mb-3 flex flex-wrap items-center gap-2 font-mono text-xs">
         <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-white/70">
           day {Math.min(round, ROUNDS)} / {ROUNDS}
