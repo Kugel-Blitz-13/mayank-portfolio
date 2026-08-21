@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import clsx from 'clsx'
-import { useRef, type MouseEvent } from 'react'
+import { useRef, useState, type MouseEvent } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { VideoHero } from '@/components/VideoHero'
 import type { Project } from '@/data/projects'
 
@@ -16,9 +17,10 @@ function Pill({ children }: { children: string }) {
 }
 
 export function ProjectCard({ project, compact }: { project: Project; compact?: boolean }) {
-  const ref = useRef<HTMLAnchorElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState(false)
 
-  function onMouseMove(e: MouseEvent<HTMLAnchorElement>) {
+  function onMouseMove(e: MouseEvent<HTMLDivElement>) {
     const el = ref.current
     if (!el) return
     const r = el.getBoundingClientRect()
@@ -27,14 +29,12 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
   }
 
   return (
-    <Link
+    <div
       ref={ref}
       onMouseMove={onMouseMove}
-      href={`/projects/${project.slug}`}
       className={clsx(
         'glass group relative flex h-full flex-col overflow-hidden rounded-2xl transition hover:border-white/25',
-        compact && 'p-5',
-        !compact && 'p-6'
+        compact ? 'p-5' : 'p-5'
       )}
     >
       <div
@@ -64,28 +64,59 @@ export function ProjectCard({ project, compact }: { project: Project; compact?: 
       ) : null}
 
       <div className="relative flex flex-1 flex-col">
-        <div className="flex items-start justify-between gap-4">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="flex w-full items-start justify-between gap-3 text-left"
+        >
           <div>
             <h3 className="text-base font-semibold tracking-tight text-white">
               {project.title}
             </h3>
             <p className="mt-1 text-sm text-white/70">{project.subtitle}</p>
           </div>
-          {project.year ? (
-            <span className="shrink-0 text-xs text-white/50">{project.year}</span>
+          <div className="flex shrink-0 items-center gap-2">
+            {project.year ? <span className="text-xs text-white/50">{project.year}</span> : null}
+            <motion.span
+              animate={{ rotate: open ? 180 : 0 }}
+              transition={{ duration: 0.25 }}
+              className="flex h-6 w-6 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/60"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+                <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </motion.span>
+          </div>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {open ? (
+            <motion.div
+              key="details"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.28, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <p className="pt-3 text-sm leading-relaxed text-white/75">{project.summary}</p>
+              <Link
+                href={`/projects/${project.slug}`}
+                className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline"
+              >
+                Full project →
+              </Link>
+            </motion.div>
           ) : null}
-        </div>
+        </AnimatePresence>
 
-        <p className="mt-4 text-sm leading-relaxed text-white/75">
-          {project.summary}
-        </p>
-
-        <div className="mt-auto flex flex-wrap gap-2 pt-5">
+        <div className="mt-auto flex flex-wrap gap-2 pt-4">
           {project.tags.slice(0, compact ? 4 : 6).map((t) => (
             <Pill key={t}>{t}</Pill>
           ))}
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
