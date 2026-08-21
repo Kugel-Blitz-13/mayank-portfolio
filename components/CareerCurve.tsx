@@ -130,11 +130,18 @@ export function CareerCurve() {
           ))}
           <line x1={60} y1={300} x2={930} y2={300} stroke="rgba(255,255,255,0.14)" strokeWidth={1} />
 
-          <text x={52} y={72} textAnchor="end" fontSize={12} fill="rgba(255,255,255,0.3)">
-            peak
+          <text
+            x={24}
+            y={182}
+            textAnchor="middle"
+            fontSize={13}
+            fill="rgba(255,255,255,0.35)"
+            transform="rotate(-90 24 182)"
+          >
+            ambition ↑
           </text>
-          <text x={52} y={260} textAnchor="end" fontSize={12} fill="rgba(255,255,255,0.3)">
-            base
+          <text x={998} y={304} textAnchor="end" fontSize={13} fill="rgba(255,255,255,0.35)">
+            years →
           </text>
 
           <motion.path

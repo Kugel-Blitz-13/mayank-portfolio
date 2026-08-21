@@ -117,10 +117,10 @@ export default function HomePage() {
           <Reveal>
             <SectionHeading
               kicker="Experience"
-              title="Career, plotted like a load curve"
+              title="The career graph"
             />
             <p className="mt-3 max-w-2xl text-sm text-white/60">
-              Hover the peaks or pick a year. The y axis is ambition, roughly to scale.
+              x axis: years. y axis: ambition. Hover the peaks or pick a year.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
