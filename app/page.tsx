@@ -11,6 +11,7 @@ import { StatTicker } from '@/components/StatTicker'
 import { CareerCurve } from '@/components/CareerCurve'
 import { TerminalCard } from '@/components/TerminalCard'
 import { PeakGame } from '@/components/PeakGame'
+import { WorkTimeline } from '@/components/WorkTimeline'
 import { Tilt } from '@/components/Tilt'
 import { Reveal } from '@/components/Reveal'
 import { featuredProjects } from '@/data/projects'
@@ -128,6 +129,25 @@ export default async function HomePage() {
               <TerminalCard lastShip={lastShip} />
             </div>
           </div>
+
+          <div className="mt-14 flex justify-center">
+            <a
+              href="#experience"
+              aria-label="Scroll to experience"
+              className="group flex flex-col items-center gap-1.5 text-white/40 transition hover:text-accent"
+            >
+              <span className="text-[10px] font-medium uppercase tracking-[0.3em]">the work</span>
+              <svg
+                className="h-6 w-6 animate-bounce"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M12 4v14m0 0 6-6m-6 6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
         </Container>
       </section>
 
@@ -138,16 +158,13 @@ export default async function HomePage() {
       <section id="experience" className="pt-16 sm:pt-24">
         <Container>
           <Reveal>
-            <SectionHeading
-              kicker="Experience"
-              title="The career graph"
-            />
+            <SectionHeading kicker="Experience" title="My work through the years" />
             <p className="mt-3 max-w-2xl text-sm text-white/60">
-              x axis: years. y axis: ambition. Hover the peaks or pick a year.
+              Most recent first. Parallel bars mean parallel lives.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
-            <CareerCurve />
+            <WorkTimeline />
           </Reveal>
         </Container>
       </section>
@@ -155,13 +172,13 @@ export default async function HomePage() {
       <section className="pt-16 sm:pt-24">
         <Container>
           <Reveal>
-            <SectionHeading kicker="Interactive" title="Beat the forecast" />
+            <SectionHeading kicker="Same story, as a chart" title="The career graph" />
             <p className="mt-3 max-w-2xl text-sm text-white/60">
-              This is the game I played all summer, minus the money. The dashed line is yesterday. One click to call today's peak, then see what actually happened. The model plays too.
+              x axis: years. y axis: ambition. Hover the peaks or pick a year.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
-            <PeakGame />
+            <CareerCurve />
           </Reveal>
         </Container>
       </section>
@@ -275,6 +292,20 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
+        </Container>
+      </section>
+
+      <section className="pt-16 sm:pt-24">
+        <Container>
+          <Reveal>
+            <SectionHeading kicker="Interactive" title="Beat the forecast" />
+            <p className="mt-3 max-w-2xl text-sm text-white/60">
+              This is the game I played all summer, minus the money. Five days, you against the model, cumulative error. The weather gets wilder as the week goes on.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-8">
+            <PeakGame />
+          </Reveal>
         </Container>
       </section>
 

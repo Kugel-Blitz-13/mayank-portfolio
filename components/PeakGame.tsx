@@ -10,7 +10,8 @@ const X1 = 584
 const Y0 = 264
 const Y1 = 36
 const MW_MIN = 55
-const MW_MAX = 105
+const MW_MAX = 115
+const ROUNDS = 5
 
 function hourToX(h: number) {
   return X0 + ((X1 - X0) * h) / 23
@@ -22,15 +23,15 @@ function yToMw(y: number) {
   return MW_MIN + ((Y0 - y) * (MW_MAX - MW_MIN)) / (Y0 - Y1)
 }
 
-function genCurve(): number[] {
-  const heat = 0.75 + Math.random() * 0.55
+function genCurve(round: number): number[] {
+  const heat = 0.7 + Math.random() * (0.45 + round * 0.14)
   const out: number[] = []
   for (let h = 0; h < 24; h++) {
     const base = 68 + 3 * Math.sin((h / 24) * Math.PI * 2)
     const morning = 7 * Math.exp(-Math.pow(h - 8, 2) / 7)
     const evening = 19 * heat * Math.exp(-Math.pow(h - 18.5, 2) / 7)
-    const noise = (Math.random() - 0.5) * 1.6
-    out.push(base + morning + evening + noise)
+    const noise = (Math.random() - 0.5) * (1.4 + round * 0.5)
+    out.push(Math.min(MW_MAX - 2, base + morning + evening + noise))
   }
   return out
 }
@@ -53,29 +54,44 @@ function curvePath(curve: number[]): string {
 }
 
 type Guess = { x: number; y: number }
+type Phase = 'guess' | 'revealed' | 'done'
 
 export function PeakGame() {
+  const [round, setRound] = useState(1)
   const [yesterday, setYesterday] = useState<number[] | null>(null)
   const [today, setToday] = useState<number[] | null>(null)
   const [modelErr, setModelErr] = useState(1)
   const [guess, setGuess] = useState<Guess | null>(null)
-  const [revealed, setRevealed] = useState(false)
+  const [phase, setPhase] = useState<Phase>('guess')
+  const [userTotal, setUserTotal] = useState(0)
+  const [modelTotal, setModelTotal] = useState(0)
+  const [lastUserErr, setLastUserErr] = useState(0)
+  const [best, setBest] = useState<number | null>(null)
 
-  const reset = () => {
-    setYesterday(genCurve())
-    setToday(genCurve())
-    setModelErr(0.4 + Math.random() * 1.4)
+  const newDay = (r: number) => {
+    setYesterday(genCurve(r))
+    setToday(genCurve(r))
+    setModelErr(0.4 + Math.random() * (1.0 + r * 0.35))
     setGuess(null)
-    setRevealed(false)
+    setPhase('guess')
+  }
+
+  const restart = () => {
+    setRound(1)
+    setUserTotal(0)
+    setModelTotal(0)
+    newDay(1)
   }
 
   useEffect(() => {
-    reset()
+    const stored = localStorage.getItem('peak-game-best')
+    if (stored) setBest(parseFloat(stored))
+    newDay(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onClick = (e: MouseEvent<SVGSVGElement>) => {
-    if (revealed || !today) return
+    if (phase !== 'guess' || !today) return
     const r = e.currentTarget.getBoundingClientRect()
     const x = ((e.clientX - r.left) / r.width) * W
     const y = ((e.clientY - r.top) / r.height) * H
@@ -85,139 +101,199 @@ export function PeakGame() {
     })
   }
 
-  let verdict: string | null = null
-  let userErrPct = 0
-  let peakMW = 0
-  let peakHour = 0
-  if (today) {
-    peakMW = Math.max(...today)
-    peakHour = today.indexOf(peakMW)
-    if (guess) {
-      userErrPct = (Math.abs(yToMw(guess.y) - peakMW) / peakMW) * 100
-    }
-    if (revealed && guess) {
-      verdict =
-        userErrPct < modelErr
-          ? `You beat the model (${userErrPct.toFixed(1)}% vs ${modelErr.toFixed(1)}%). Unsettling. Email me.`
-          : `The model wins: ${modelErr.toFixed(1)}% error vs your ${userErrPct.toFixed(1)}%. Feature engineering remains undefeated.`
-    }
+  const reveal = () => {
+    if (!today || !guess) return
+    const peak = Math.max(...today)
+    const err = (Math.abs(yToMw(guess.y) - peak) / peak) * 100
+    setLastUserErr(err)
+    setUserTotal((t) => t + err)
+    setModelTotal((t) => t + modelErr)
+    setPhase('revealed')
   }
 
+  const next = () => {
+    if (round >= ROUNDS) {
+      const finalUser = userTotal
+      if (best === null || finalUser < best) {
+        setBest(finalUser)
+        localStorage.setItem('peak-game-best', finalUser.toFixed(1))
+      }
+      setPhase('done')
+      return
+    }
+    const r = round + 1
+    setRound(r)
+    newDay(r)
+  }
+
+  const peakMW = today ? Math.max(...today) : 0
+  const peakHour = today ? today.indexOf(peakMW) : 0
   const modelMW = peakMW * (1 + modelErr / 100)
 
   return (
     <div className="glass rounded-3xl p-4 sm:p-6">
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        className={revealed ? 'w-full' : 'w-full cursor-crosshair'}
-        onClick={onClick}
-        role="img"
-        aria-label="Load forecasting game chart"
-      >
-        {[80, 135, 190, 245].map((y) => (
-          <line key={y} x1={X0} y1={y} x2={X1} y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth={1} />
-        ))}
-        <line x1={X0} y1={Y0} x2={X1} y2={Y0} stroke="rgba(255,255,255,0.14)" strokeWidth={1} />
-        {[0, 6, 12, 18, 23].map((h) => (
-          <text key={h} x={hourToX(h)} y={Y0 + 18} textAnchor="middle" fontSize={11} fill="rgba(255,255,255,0.4)">
-            {h}:00
-          </text>
-        ))}
-        <text x={X0 - 6} y={Y1 + 8} textAnchor="end" fontSize={11} fill="rgba(255,255,255,0.4)">
-          GW
-        </text>
-
-        {yesterday ? (
-          <path
-            d={curvePath(yesterday)}
-            fill="none"
-            stroke="rgba(255,255,255,0.28)"
-            strokeWidth={2}
-            strokeDasharray="5 5"
-          />
+      <div className="mb-3 flex flex-wrap items-center gap-2 font-mono text-xs">
+        <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-white/70">
+          day {Math.min(round, ROUNDS)} / {ROUNDS}
+        </span>
+        <span className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-accent">
+          you {userTotal.toFixed(1)}
+        </span>
+        <span className="rounded-full border border-accent2/30 bg-accent2/10 px-3 py-1 text-accent2">
+          model {modelTotal.toFixed(1)}
+        </span>
+        {best !== null ? (
+          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/45">
+            best run {best.toFixed(1)}
+          </span>
         ) : null}
-
-        {revealed && today ? (
-          <>
-            <motion.path
-              d={curvePath(today)}
-              fill="none"
-              stroke="rgb(45 212 191)"
-              strokeWidth={2.5}
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.2, ease: 'easeInOut' }}
-            />
-            <circle cx={hourToX(peakHour)} cy={mwToY(peakMW)} r={6} fill="rgb(45 212 191)" />
-            <text
-              x={hourToX(peakHour)}
-              y={mwToY(peakMW) - 12}
-              textAnchor="middle"
-              fontSize={11}
-              fill="rgba(255,255,255,0.75)"
-            >
-              actual peak
-            </text>
-            <circle cx={hourToX(peakHour)} cy={mwToY(modelMW)} r={5} fill="none" stroke="rgb(96 165 250)" strokeWidth={2} />
-            <text
-              x={hourToX(peakHour) + 12}
-              y={mwToY(modelMW) + 4}
-              fontSize={11}
-              fill="rgba(96,165,250,0.9)"
-            >
-              model
-            </text>
-          </>
-        ) : null}
-
-        {guess ? (
-          <>
-            <line
-              x1={guess.x - 7}
-              y1={guess.y - 7}
-              x2={guess.x + 7}
-              y2={guess.y + 7}
-              stroke="rgb(96 165 250)"
-              strokeWidth={2.5}
-            />
-            <line
-              x1={guess.x - 7}
-              y1={guess.y + 7}
-              x2={guess.x + 7}
-              y2={guess.y - 7}
-              stroke="rgb(96 165 250)"
-              strokeWidth={2.5}
-            />
-            {!revealed ? (
-              <text x={guess.x} y={guess.y - 12} textAnchor="middle" fontSize={11} fill="rgba(255,255,255,0.7)">
-                your call
-              </text>
-            ) : null}
-          </>
-        ) : null}
-      </svg>
-
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => setRevealed(true)}
-          disabled={!guess || revealed}
-          className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
-        >
-          Reveal the actual
-        </button>
-        <button
-          type="button"
-          onClick={reset}
-          className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
-        >
-          New day
-        </button>
-        <p className="text-sm text-white/65">
-          {verdict ?? (guess ? 'Locked in. Reveal when ready.' : 'Dashed line is yesterday. Click where today peaks.')}
-        </p>
+        <span className="text-white/35">lower is better</span>
       </div>
+
+      {phase === 'done' ? (
+        <div className="flex min-h-[260px] flex-col items-center justify-center gap-3 text-center">
+          <p className="font-space text-2xl font-semibold text-white">
+            {userTotal < modelTotal ? 'You beat the model over a full week.' : 'The model takes the week.'}
+          </p>
+          <p className="max-w-md text-sm text-white/65">
+            {userTotal < modelTotal
+              ? `Total error ${userTotal.toFixed(1)} vs the model's ${modelTotal.toFixed(1)}. Genuinely impressive. My inbox is open.`
+              : `Your total error: ${userTotal.toFixed(1)}. The model: ${modelTotal.toFixed(1)}. It does this every morning before you wake up.`}
+          </p>
+          <button
+            type="button"
+            onClick={restart}
+            className="mt-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-black transition hover:opacity-90"
+          >
+            Run it back
+          </button>
+        </div>
+      ) : (
+        <>
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            className={phase === 'guess' ? 'w-full cursor-crosshair' : 'w-full'}
+            onClick={onClick}
+            role="img"
+            aria-label="Load forecasting game chart"
+          >
+            {[80, 135, 190, 245].map((y) => (
+              <line key={y} x1={X0} y1={y} x2={X1} y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth={1} />
+            ))}
+            <line x1={X0} y1={Y0} x2={X1} y2={Y0} stroke="rgba(255,255,255,0.14)" strokeWidth={1} />
+            {[0, 6, 12, 18, 23].map((h) => (
+              <text key={h} x={hourToX(h)} y={Y0 + 18} textAnchor="middle" fontSize={11} fill="rgba(255,255,255,0.4)">
+                {h}:00
+              </text>
+            ))}
+            <text x={X0 - 6} y={Y1 + 8} textAnchor="end" fontSize={11} fill="rgba(255,255,255,0.4)">
+              GW
+            </text>
+
+            {yesterday ? (
+              <path
+                d={curvePath(yesterday)}
+                fill="none"
+                stroke="rgba(255,255,255,0.28)"
+                strokeWidth={2}
+                strokeDasharray="5 5"
+              />
+            ) : null}
+
+            {phase === 'revealed' && today ? (
+              <>
+                <motion.path
+                  d={curvePath(today)}
+                  fill="none"
+                  stroke="rgb(45 212 191)"
+                  strokeWidth={2.5}
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.1, ease: 'easeInOut' }}
+                />
+                <circle cx={hourToX(peakHour)} cy={mwToY(peakMW)} r={6} fill="rgb(45 212 191)" />
+                <text
+                  x={hourToX(peakHour)}
+                  y={mwToY(peakMW) - 12}
+                  textAnchor="middle"
+                  fontSize={11}
+                  fill="rgba(255,255,255,0.75)"
+                >
+                  actual peak
+                </text>
+                <circle
+                  cx={hourToX(peakHour)}
+                  cy={mwToY(modelMW)}
+                  r={5}
+                  fill="none"
+                  stroke="rgb(96 165 250)"
+                  strokeWidth={2}
+                />
+                <text x={hourToX(peakHour) + 12} y={mwToY(modelMW) + 4} fontSize={11} fill="rgba(96,165,250,0.9)">
+                  model
+                </text>
+              </>
+            ) : null}
+
+            {guess ? (
+              <>
+                <line
+                  x1={guess.x - 7}
+                  y1={guess.y - 7}
+                  x2={guess.x + 7}
+                  y2={guess.y + 7}
+                  stroke="rgb(96 165 250)"
+                  strokeWidth={2.5}
+                />
+                <line
+                  x1={guess.x - 7}
+                  y1={guess.y + 7}
+                  x2={guess.x + 7}
+                  y2={guess.y - 7}
+                  stroke="rgb(96 165 250)"
+                  strokeWidth={2.5}
+                />
+                {phase === 'guess' ? (
+                  <text x={guess.x} y={guess.y - 12} textAnchor="middle" fontSize={11} fill="rgba(255,255,255,0.7)">
+                    your call
+                  </text>
+                ) : null}
+              </>
+            ) : null}
+          </svg>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            {phase === 'guess' ? (
+              <button
+                type="button"
+                onClick={reveal}
+                disabled={!guess}
+                className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                Lock it in
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={next}
+                className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:opacity-90"
+              >
+                {round >= ROUNDS ? 'Final score' : 'Next day →'}
+              </button>
+            )}
+            <p className="text-sm text-white/65">
+              {phase === 'guess'
+                ? guess
+                  ? 'Locked on target. Commit.'
+                  : 'Dashed line is yesterday. Click where today peaks. Weather gets wilder each day.'
+                : lastUserErr < modelErr
+                  ? `You took this day: ${lastUserErr.toFixed(1)}% vs the model's ${modelErr.toFixed(1)}%.`
+                  : `Model's day: ${modelErr.toFixed(1)}% vs your ${lastUserErr.toFixed(1)}%.`}
+            </p>
+          </div>
+        </>
+      )}
     </div>
   )
 }
