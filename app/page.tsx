@@ -22,7 +22,7 @@ export default function HomePage() {
           <div className="grid items-start gap-10 md:grid-cols-[1.2fr_0.8fr]">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-                Agentic AI • ML Platforms • Clean-Tech Optimization
+                Agentic AI • ML Systems • Quantitative Modeling
               </p>
 
               <h1 className="mt-4 text-balance font-space text-4xl font-semibold leading-[1.1] sm:text-6xl">
@@ -30,18 +30,18 @@ export default function HomePage() {
                 <span className="block min-h-[1.2em] bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent">
                   <TypedWords
                     words={[
-                      'power markets.',
-                      'load forecasting.',
+                      'trading desks.',
                       'agentic systems.',
-                      'solar fleets.',
-                      'the real grid.'
+                      'applied research.',
+                      'production pipelines.',
+                      'power markets.'
                     ]}
                   />
                 </span>
               </h1>
 
               <p className="mt-5 max-w-xl text-pretty text-base text-white/70 sm:text-lg">
-                I build ML systems for real energy decisions: load forecasting at a power trading firm, production ML for utility scale renewables, and agentic AI workflows from data pipelines to deployment. Recent work spans PJM demand forecasting, grid aware siting optimization, and industry sponsored research on reliable tool interfaces for AI agents.
+                I build ML systems that survive contact with production: demand forecasting on a proprietary trading desk, Boeing funded research on agentic AI for engineering design, and pipelines that run end to end from raw data to deployment. The domains vary; the standard does not. Evidence over vibes, tests over demos.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">

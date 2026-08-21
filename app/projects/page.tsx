@@ -10,7 +10,7 @@ export default function ProjectsPage() {
       <Container>
         <SectionHeading
           kicker="Projects"
-          title="Work across clean-tech, ML infra, and applied research"
+          title="Work across trading, aerospace, ML infra, and applied research"
           right={
             <Link
               href="/"

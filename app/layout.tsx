@@ -13,7 +13,7 @@ const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' })
 
 export const metadata: Metadata = {
   title: 'Mayank Dixit | AI Engineer',
-  description: 'Portfolio: agentic systems, ML infra, and clean-tech optimization.'
+  description: 'Portfolio: ML systems, agentic AI, and quantitative modeling across trading, aerospace research, and energy.'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
