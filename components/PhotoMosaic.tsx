@@ -2,17 +2,6 @@ import Image from 'next/image'
 
 type Photo = { src: string; alt: string; caption?: string }
 
-const featurePhotos: Photo[] = [
-  {
-    src: '/photos/cmu.jpg',
-    alt: 'Standing in front of the Carnegie Mellon University sign'
-  },
-  {
-    src: '/photos/cvip.jpg',
-    alt: 'At the CVIP 2022 conference'
-  }
-]
-
 const gridPhotos: Photo[] = [
   {
     src: '/photos/hobbies/triathlon.jpg',
@@ -47,10 +36,10 @@ function Caption({ text }: { text: string }) {
 export function PhotoMosaic() {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:col-span-2">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:col-span-2 sm:row-span-2 sm:aspect-auto">
         <Image
-          src={featurePhotos[0].src}
-          alt={featurePhotos[0].alt}
+          src="/photos/cmu.jpg"
+          alt="Standing in front of the Carnegie Mellon University sign"
           fill
           className="object-cover"
           sizes="(max-width: 640px) 100vw, 66vw"
@@ -59,12 +48,23 @@ export function PhotoMosaic() {
 
       <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
         <Image
-          src={featurePhotos[1].src}
-          alt={featurePhotos[1].alt}
+          src="/photos/cvip.jpg"
+          alt="At the CVIP 2022 conference"
           fill
           className="object-cover"
           sizes="(max-width: 640px) 100vw, 34vw"
         />
+      </div>
+
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <Image
+          src="/photos/hobbies/snowboard.jpg"
+          alt="Sitting on a snowy slope with a snowboard strapped in"
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 100vw, 34vw"
+        />
+        <Caption text="All the gear, some idea" />
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:col-span-3 sm:grid-cols-4">

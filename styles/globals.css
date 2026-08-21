@@ -17,6 +17,11 @@ html, body {
   height: 100%;
 }
 
+::selection {
+  background: rgba(45, 212, 191, 0.35);
+  color: rgb(var(--text));
+}
+
 body {
   background: rgb(var(--bg));
   color: rgb(var(--text));

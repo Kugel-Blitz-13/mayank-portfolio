@@ -245,7 +245,7 @@ export default function HomePage() {
         <Container>
           <SectionHeading kicker="Beyond work" title="Things I do when I’m not coding" />
           <p className="mt-4 max-w-2xl text-sm text-white/70">
-            I like building prototypes, traveling for conferences, getting out on the water, and as of this summer, racing triathlons.
+            I like building prototypes, traveling for conferences, getting out on the water, racing triathlons, and pointing snowboards down hills.
           </p>
           <div className="mt-8">
             <Reveal>

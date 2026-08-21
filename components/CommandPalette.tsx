@@ -16,7 +16,8 @@ const ACTIONS: Action[] = [
   { label: 'Email Mayank', hint: 'contact', href: 'mailto:mayankdixit132001@gmail.com', external: true },
   { label: 'LinkedIn', hint: 'link', href: 'https://www.linkedin.com/in/mayank-dixit-max007/', external: true },
   { label: 'GitHub', hint: 'link', href: 'https://github.com/Kugel-Blitz-13', external: true },
-  { label: 'Listening stats on stats.fm', hint: 'link', href: 'https://stats.fm/kugelblitz', external: true }
+  { label: 'Listening stats on stats.fm', hint: 'link', href: 'https://stats.fm/kugelblitz', external: true },
+  { label: 'Simulate a grid event', hint: 'easter egg', href: '#grid-event' }
 ]
 
 export function CommandPalette() {
@@ -66,6 +67,10 @@ export function CommandPalette() {
 
   const run = (a: Action) => {
     setOpen(false)
+    if (a.href === '#grid-event') {
+      window.dispatchEvent(new Event('grid:blackout'))
+      return
+    }
     if (a.external) {
       if (a.href.startsWith('mailto:')) {
         window.location.href = a.href

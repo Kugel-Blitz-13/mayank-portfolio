@@ -4,6 +4,8 @@ import { Inter, Space_Grotesk } from 'next/font/google'
 import '@/styles/globals.css'
 import { Navbar } from '@/components/Navbar'
 import { CommandPalette } from '@/components/CommandPalette'
+import { GridEvent } from '@/components/GridEvent'
+import { ScrollProgress } from '@/components/ScrollProgress'
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -21,8 +23,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="pointer-events-none fixed inset-0 bg-grid" />
         <div className="pointer-events-none fixed inset-0 bg-aurora" />
         <div className="pointer-events-none fixed inset-0 bg-glow opacity-80" />
+        <ScrollProgress />
         <Navbar />
         <CommandPalette />
+        <GridEvent />
         {children}
         <Analytics />
         <SpeedInsights />

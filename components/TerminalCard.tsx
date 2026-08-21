@@ -4,10 +4,14 @@ import { useEffect, useState } from 'react'
 
 export function TerminalCard() {
   const [now, setNow] = useState<Date | null>(null)
+  const [hz, setHz] = useState('60.00')
 
   useEffect(() => {
     setNow(new Date())
-    const id = setInterval(() => setNow(new Date()), 1000)
+    const id = setInterval(() => {
+      setNow(new Date())
+      setHz((60 + (Math.random() - 0.5) * 0.04).toFixed(2))
+    }, 1000)
     return () => clearInterval(id)
   }, [])
 
@@ -46,6 +50,9 @@ export function TerminalCard() {
         </p>
         <p>
           <span className="text-accent">&gt;</span> current: CMU + Boeing funded MCP research
+        </p>
+        <p>
+          <span className="text-accent">&gt;</span> grid frequency: {hz} Hz
         </p>
         <p>
           <span className="text-accent">&gt;</span> uptime: 3 publications, 0 unhandled exceptions
