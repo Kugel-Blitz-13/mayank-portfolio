@@ -95,6 +95,116 @@ const WORDS: Entry[] = [
     word: 'BUILD',
     meaning: 'Turning source code into something runnable.',
     hints: ['CI runs one on every push', 'It fails on Fridays', 'Vercel does one for this site every time I commit']
+  },
+  {
+    word: 'QUEUE',
+    meaning: 'A line of work processed first in, first out.',
+    hints: ['FIFO by definition', 'Four fifths of it is silent', 'Messages wait in one']
+  },
+  {
+    word: 'BATCH',
+    meaning: 'A group of items processed together instead of one at a time.',
+    hints: ['Gradient descent comes in mini versions of this', 'The opposite of streaming', 'Cookies are also made in one']
+  },
+  {
+    word: 'PARSE',
+    meaning: 'Reading structure out of raw text.',
+    hints: ['What every compiler does first', 'JSON dot ___', 'Turning strings into meaning']
+  },
+  {
+    word: 'ARRAY',
+    meaning: 'An ordered block of values, indexed from zero.',
+    hints: ['Starts counting at zero', 'NumPy’s favorite object', 'Out of bounds errors live here']
+  },
+  {
+    word: 'CLASS',
+    meaning: 'A blueprint for objects in object oriented programming.',
+    hints: ['It has methods', 'Python and Java both start objects here', 'Also where students sit']
+  },
+  {
+    word: 'LOGIC',
+    meaning: 'The rules of reasoning every program is built on.',
+    hints: ['Gates are made of it', 'AND, OR, NOT', 'Spock’s favorite subject']
+  },
+  {
+    word: 'INPUT',
+    meaning: 'Whatever goes into a system before it becomes output.',
+    hints: ['Garbage in, garbage out starts here', 'Forms collect it', 'The I in I/O']
+  },
+  {
+    word: 'LINUX',
+    meaning: 'The open source OS running most of the internet.',
+    hints: ['A penguin is its mascot', 'Torvalds wrote the first version', 'Every server you have ever used probably runs it']
+  },
+  {
+    word: 'REACT',
+    meaning: 'The UI library behind half the modern web, including this site.',
+    hints: ['Components and hooks', 'Made at Facebook', 'This very page is built with it']
+  },
+  {
+    word: 'ROBOT',
+    meaning: 'A machine that senses, decides, and acts in the physical world.',
+    hints: ['Asimov wrote laws for them', 'txt file that tells crawlers what to skip', 'I built a small autonomous one at IIT Kharagpur']
+  },
+  {
+    word: 'MACRO',
+    meaning: 'Code that writes or replays code. A recorded shortcut.',
+    hints: ['Excel power users love them', 'The opposite of micro', 'C programmers define them with a hash']
+  },
+  {
+    word: 'PATCH',
+    meaning: 'A small fix shipped fast.',
+    hints: ['Tuesday is named after it', 'Version numbers end with one', 'What you apply to a vulnerability']
+  },
+  {
+    word: 'LOGIN',
+    meaning: 'Proving to a system that you are you.',
+    hints: ['Username plus password', 'The page before everything else', 'You fail it three times and get locked out']
+  },
+  {
+    word: 'EMAIL',
+    meaning: 'The internet’s oldest killer app. Still undefeated.',
+    hints: ['Has an @ in the middle', 'Reply all is its greatest danger', 'Older than the web itself']
+  },
+  {
+    word: 'VIRUS',
+    meaning: 'Code that copies itself into places it was never invited.',
+    hints: ['Spreads by itself', 'Antivirus is named after it', 'Also a biology term']
+  },
+  {
+    word: 'CRASH',
+    meaning: 'When a program stops abruptly and takes your unsaved work with it.',
+    hints: ['Blue screens announce it', 'Segfaults cause it', 'Also what markets do']
+  },
+  {
+    word: 'BLOCK',
+    meaning: 'A batch of transactions chained to the previous one. Also a unit of storage.',
+    hints: ['Chain them and you get a buzzword', 'Miners compete to add one', 'Tetris is made of them']
+  },
+  {
+    word: 'GRAPH',
+    meaning: 'Nodes and edges. The shape of every network.',
+    hints: ['Social networks are one', 'Neural nets are computational ones', 'BFS and DFS walk them']
+  },
+  {
+    word: 'SCALE',
+    meaning: 'Handling ten times the load without ten times the pain.',
+    hints: ['Horizontal or vertical', 'The hard part of every startup', 'Also found on fish']
+  },
+  {
+    word: 'TRAIN',
+    meaning: 'Teaching a model by showing it data until it stops being wrong.',
+    hints: ['GPUs burn for this', 'Comes before test and validation', 'Also runs on rails']
+  },
+  {
+    word: 'LABEL',
+    meaning: 'The ground truth a supervised model learns from.',
+    hints: ['Supervised learning needs them', 'Humans annotate them', 'Also found on soup cans']
+  },
+  {
+    word: 'DRONE',
+    meaning: 'A flying robot with a camera and opinions about wind.',
+    hints: ['Quadcopters are the common kind', 'Delivery companies keep promising them', 'I wrote a takeoff model for one at IIT Kharagpur']
   }
 ]
 
@@ -142,7 +252,11 @@ export function TechWordle() {
   const [bestStreak, setBestStreak] = useState(0)
 
   const newGame = () => {
-    setEntry(WORDS[Math.floor(Math.random() * WORDS.length)])
+    const last = localStorage.getItem('tw-last')
+    const pool = WORDS.filter((w) => w.word !== last)
+    const pick = pool[Math.floor(Math.random() * pool.length)]
+    localStorage.setItem('tw-last', pick.word)
+    setEntry(pick)
     setRows([])
     setCurrent('')
     setDone(null)
