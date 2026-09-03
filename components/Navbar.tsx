@@ -8,8 +8,7 @@ const nav = [
   { href: '/', label: 'Home' },
   { href: '/#experience', label: 'Experience' },
   { href: '/projects', label: 'Projects' },
-  { href: '/#about', label: 'About' },
-  { href: '/#beyond', label: 'Beyond Work' }
+  { href: '/personal', label: 'Off the clock' }
 ]
 
 export function Navbar() {
@@ -50,7 +49,7 @@ export function Navbar() {
             <kbd className="rounded border border-white/15 bg-white/10 px-1.5 text-[10px]">Ctrl K</kbd>
           </button>
           <Link
-            href="/docs/Mayank_Dixit_Resume.pdf"
+            href="/resume?from=nav"
             className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/85 transition hover:bg-white/10"
           >
             Resume

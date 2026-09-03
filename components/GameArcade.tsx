@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { track } from '@vercel/analytics'
 import { PeakGame } from '@/components/PeakGame'
 import { TechWordle } from '@/components/TechWordle'
 import { BitFlip } from '@/components/BitFlip'
@@ -23,7 +24,10 @@ export function GameArcade() {
           <button
             key={t.id}
             type="button"
-            onClick={() => setTab(t.id)}
+            onClick={() => {
+              setTab(t.id)
+              track('game_opened', { game: t.id })
+            }}
             className={
               tab === t.id
                 ? 'rounded-full border border-accent/50 bg-accent/10 px-4 py-2 font-pixel text-[9px] text-accent'

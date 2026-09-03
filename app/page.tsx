@@ -3,21 +3,32 @@ import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { SectionHeading } from '@/components/SectionHeading'
 import { ProjectCard } from '@/components/ProjectCard'
-import { PhotoMosaic } from '@/components/PhotoMosaic'
-import { PhotoGallery } from '@/components/PhotoGallery'
-import { MusicCard } from '@/components/MusicCard'
 import { TypedWords } from '@/components/TypedWords'
 import { StatTicker } from '@/components/StatTicker'
 import { CareerCurve } from '@/components/CareerCurve'
 import { TerminalCard } from '@/components/TerminalCard'
-import { GameArcade } from '@/components/GameArcade'
 import { PixelDrift } from '@/components/PixelDrift'
 import { WorkTimeline } from '@/components/WorkTimeline'
 import { Tilt } from '@/components/Tilt'
 import { Reveal } from '@/components/Reveal'
+import { TrackedLink } from '@/components/TrackedLink'
+import { SiteFooter } from '@/components/SiteFooter'
 import { featuredProjects } from '@/data/projects'
 
 type GitHubEvent = { type: string; repo?: { name?: string }; created_at: string }
+
+const SKILLS = [
+  'Agentic AI',
+  'RAG',
+  'Evals',
+  'Python',
+  'Spark',
+  'GCP',
+  'PostgreSQL',
+  'Docker',
+  'MCP',
+  'Time-series forecasting'
+]
 
 async function getLastShip(): Promise<string | null> {
   try {
@@ -42,7 +53,8 @@ export default async function HomePage() {
   const lastShip = await getLastShip()
   return (
     <main>
-      <section className="relative pt-14 sm:pt-20">
+      {/* Hero doubles as the about section: intro, how I build, and every link. */}
+      <section id="about" className="relative pt-14 sm:pt-20">
         <PixelDrift />
         <Container>
           <div className="grid items-start gap-10 md:grid-cols-[1.2fr_0.8fr]">
@@ -77,39 +89,78 @@ export default async function HomePage() {
                 >
                   View projects
                 </Link>
-                <a
-                  href="/docs/Mayank_Dixit_Resume.pdf"
+                <Link
+                  href="/resume?from=hero"
                   className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
                 >
                   Download resume
-                </a>
-                <a
+                </Link>
+                <TrackedLink
                   href="mailto:mayankdixit132001@gmail.com"
+                  event="contact_click"
+                  data={{ source: 'hero' }}
                   className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
                 >
                   Contact
-                </a>
+                </TrackedLink>
+                <TrackedLink
+                  href="https://www.linkedin.com/in/mayank-dixit-max007/"
+                  event="outbound_click"
+                  data={{ destination: 'linkedin', source: 'hero' }}
+                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
+                >
+                  LinkedIn
+                </TrackedLink>
+                <TrackedLink
+                  href="https://github.com/Kugel-Blitz-13"
+                  event="outbound_click"
+                  data={{ destination: 'github', source: 'hero' }}
+                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
+                >
+                  GitHub
+                </TrackedLink>
               </div>
 
-              <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                <div className="glass rounded-2xl p-4">
-                  <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Focus</p>
-                  <p className="mt-2 text-sm text-white/75">
-                    LLM agents, RAG, evaluation, data engineering, cloud deployment
+              <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                <div className="glass rounded-2xl p-5">
+                  <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
+                    How I build
                   </p>
-                </div>
-                <div className="glass rounded-2xl p-4">
-                  <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Stack</p>
-                  <p className="mt-2 text-sm text-white/75">
-                    Python, Spark, GCP, PostgreSQL, Docker, Next.js, Mapbox
+                  <p className="mt-3 text-sm text-white/75">
+                    I like projects where the hard part is the system: messy data, real-time
+                    constraints, ambiguous objectives, and shipping something that holds up in
+                    production.
                   </p>
+                  <ul className="mt-4 space-y-2 text-sm text-white/70">
+                    <li>• Pipelines that are reproducible (tests, schemas, deterministic outputs)</li>
+                    <li>• Reliability first, then performance (profiling, caching, batching)</li>
+                    <li>• Quality measured with evals, not vibes (offline + online metrics)</li>
+                  </ul>
                 </div>
-                <div className="glass rounded-2xl p-4">
+
+                <div className="glass rounded-2xl p-5">
                   <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Now</p>
+                  <p className="mt-3 text-sm text-white/75">
+                    Quant work in power markets + Boeing funded research on MCP agent tooling.
+                  </p>
+                  <p className="mt-4 text-xs font-medium uppercase tracking-[0.22em] text-white/50">
+                    Focus
+                  </p>
                   <p className="mt-2 text-sm text-white/75">
-                    Quant work in power markets + Boeing funded research on MCP agent tooling
+                    LLM agents, RAG, evaluation, data engineering, cloud deployment.
                   </p>
                 </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {SKILLS.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
+                  >
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
 
@@ -217,10 +268,10 @@ export default async function HomePage() {
           <SectionHeading kicker="Publications" title="Selected papers" />
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
-            <a
+            <TrackedLink
               href="https://www.researchgate.net/publication/370587091_Structure-Based_Learning_for_Robust_Defense_Against_Adversarial_Attacks_in_Autonomous_Driving_Agents"
-              target="_blank"
-              rel="noreferrer"
+              event="outbound_click"
+              data={{ destination: 'researchgate', source: 'publications' }}
               className="glass rounded-3xl p-6 transition hover:border-white/25"
             >
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Robotics • Adversarial ML</p>
@@ -228,12 +279,12 @@ export default async function HomePage() {
                 Structure-Based Learning for Robust Defense Against Adversarial Attacks in Autonomous Driving Agents
               </h3>
               <p className="mt-2 text-sm text-white/70">Read on ResearchGate →</p>
-            </a>
+            </TrackedLink>
 
-            <a
+            <TrackedLink
               href="https://ieeexplore.ieee.org/document/10306508/"
-              target="_blank"
-              rel="noreferrer"
+              event="outbound_click"
+              data={{ destination: 'ieee', source: 'publications' }}
               className="glass rounded-3xl p-6 transition hover:border-white/25"
             >
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Signal Processing • ViT</p>
@@ -241,121 +292,41 @@ export default async function HomePage() {
                 Bearing Fault Detection (IEEE Xplore)
               </h3>
               <p className="mt-2 text-sm text-white/70">Read on IEEE Xplore →</p>
-            </a>
+            </TrackedLink>
           </div>
         </Container>
       </section>
 
-      <section id="about" className="relative pt-16 sm:pt-24">
-        <PixelDrift />
-        <Container>
-          <SectionHeading kicker="About" title="How I build" />
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <div className="glass rounded-3xl p-6 md:col-span-2">
-              <p className="text-white/75">
-                I like projects where the hard part is the system: messy data, real-time constraints,
-                ambiguous objectives, and shipping something that holds up in production.
-              </p>
-              <ul className="mt-5 space-y-2 text-sm text-white/70">
-                <li>• Build pipelines that are reproducible (tests, schemas, deterministic outputs)</li>
-                <li>• Optimize for reliability first, then performance (profiling, caching, batching)</li>
-                <li>• Measure quality with evals, not vibes (benchmarks, offline + online metrics)</li>
-              </ul>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {[
-                  'Agentic AI',
-                  'RAG',
-                  'Spark',
-                  'GCP',
-                  'PostgreSQL',
-                  'Docker',
-                  'MCP',
-                  'Time-series forecasting'
-                ].map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="glass rounded-3xl p-6">
-              <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Links</p>
-              <div className="mt-4 space-y-2 text-sm">
-                <a className="block text-white/80 hover:text-white" href="https://www.linkedin.com/in/mayank-dixit-max007/" target="_blank" rel="noreferrer">
-                  LinkedIn
-                </a>
-                <a className="block text-white/80 hover:text-white" href="https://github.com/Kugel-Blitz-13" target="_blank" rel="noreferrer">
-                  GitHub
-                </a>
-                <a className="block text-white/80 hover:text-white" href="/docs/Mayank_Dixit_Resume.pdf">
-                  Resume (PDF)
-                </a>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section id="arcade" className="relative pt-16 sm:pt-24">
+      {/* The arcade, photos, and music now live on /personal. */}
+      <section className="relative pb-20 pt-16 sm:pt-24">
         <PixelDrift />
         <Container>
           <Reveal>
-            <p className="font-pixel text-[10px] tracking-wider text-accent/70">INSERT COIN</p>
-            <SectionHeading kicker="Interactive" title="The arcade" />
-            <p className="mt-3 max-w-2xl text-sm text-white/60">
-              Three games. Tech wordle: six tries at a five letter word from code and AI, with hints when you struggle. Bit flip: match the binary before the clock runs out. Beat the forecast: five days against the model, the game I played all summer minus the money.
-            </p>
-          </Reveal>
-          <Reveal delay={0.1} className="mt-8">
-            <GameArcade />
-          </Reveal>
-        </Container>
-      </section>
-
-      <section id="beyond" className="relative pt-16 pb-20 sm:pt-24">
-        <PixelDrift />
-        <Container>
-          <SectionHeading kicker="Beyond work" title="Things I do when I’m not coding" />
-          <p className="mt-4 max-w-2xl text-sm text-white/70">
-            I like building prototypes, traveling for conferences, getting out on the water, racing triathlons, and pointing snowboards down hills.
-          </p>
-          <div className="mt-8">
-            <Reveal>
-              <PhotoMosaic />
-            </Reveal>
-          </div>
-          <div className="mt-10">
-            <Reveal>
-              <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Through the lens</p>
-              <div className="mt-4">
-                <PhotoGallery />
+            <Link
+              href="/personal"
+              className="glass group block rounded-3xl p-6 transition hover:border-white/25 sm:p-8"
+            >
+              <p className="font-pixel text-[10px] tracking-wider text-accent/70">INSERT COIN</p>
+              <div className="mt-3 flex flex-wrap items-end justify-between gap-5">
+                <div>
+                  <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+                    Off the clock
+                  </h2>
+                  <p className="mt-2 max-w-xl text-sm text-white/70">
+                    Three games I built (tech wordle, bit flip, beat the forecast), photos from
+                    wherever I was standing, and what is on loop while I code.
+                  </p>
+                </div>
+                <span className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white transition group-hover:bg-white/10">
+                  Open the arcade →
+                </span>
               </div>
-            </Reveal>
-          </div>
-          <div className="mt-10">
-            <Reveal delay={0.1}>
-              <MusicCard />
-            </Reveal>
-          </div>
+            </Link>
+          </Reveal>
         </Container>
       </section>
 
-      <footer className="relative overflow-hidden border-t border-white/10 pb-10 pt-14">
-        <PixelDrift />
-        <Container>
-          <p className="text-outline select-none whitespace-nowrap text-center font-space text-[11.5vw] font-bold leading-none tracking-tight sm:text-[7.5vw]">
-            MAYANK DIXIT
-          </p>
-          <div className="mt-10 flex flex-col gap-2 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} Mayank Dixit</p>
-            <p className="text-white/50">Built with Next.js + Tailwind</p>
-          </div>
-        </Container>
-      </footer>
+      <SiteFooter />
     </main>
   )
 }
