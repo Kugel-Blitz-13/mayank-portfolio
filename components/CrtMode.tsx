@@ -1,9 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 export function CrtMode() {
   const [on, setOn] = useState(false)
+  // The floating toggle is an arcade thing, so it only shows on /personal.
+  // The effect itself still follows you to other pages once it is on.
+  const showButton = usePathname().startsWith('/personal')
 
   useEffect(() => {
     if (localStorage.getItem('crt') === '1') setOn(true)
@@ -18,14 +22,16 @@ export function CrtMode() {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => window.dispatchEvent(new Event('crt:toggle'))}
-        className="fixed bottom-4 right-4 z-[160] rounded-full border border-white/15 bg-black/60 px-3 py-1.5 font-mono text-[11px] text-white/60 backdrop-blur transition hover:text-white"
-        aria-pressed={on}
-      >
-        CRT {on ? 'ON' : 'OFF'}
-      </button>
+      {showButton || on ? (
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new Event('crt:toggle'))}
+          className="fixed bottom-4 right-4 z-[160] rounded-full border border-white/15 bg-black/60 px-3 py-1.5 font-mono text-[11px] text-white/60 backdrop-blur transition hover:text-white"
+          aria-pressed={on}
+        >
+          CRT {on ? 'ON' : 'OFF'}
+        </button>
+      ) : null}
 
       {on ? (
         <>

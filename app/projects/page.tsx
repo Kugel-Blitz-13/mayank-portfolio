@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { SectionHeading } from '@/components/SectionHeading'
 import { ProjectCard } from '@/components/ProjectCard'
+import { StatTicker } from '@/components/StatTicker'
 import { featuredProjects, moreProjects } from '@/data/projects'
 
 export default function ProjectsPage() {
@@ -20,6 +21,10 @@ export default function ProjectsPage() {
             </Link>
           }
         />
+
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02]">
+          <StatTicker />
+        </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {featuredProjects.map((p) => (

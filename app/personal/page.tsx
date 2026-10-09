@@ -9,6 +9,7 @@ import { GameArcade } from '@/components/GameArcade'
 import { IdleCube } from '@/components/IdleCube'
 import { PixelDrift } from '@/components/PixelDrift'
 import { Reveal } from '@/components/Reveal'
+import { CareerCurve } from '@/components/CareerCurve'
 import { SiteFooter } from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
@@ -33,8 +34,8 @@ export default function PersonalPage() {
               home page
             </Link>
             . This is everything else: three games I built because the idea would not leave me alone, a Rubik&apos;s cube that
-            turns itself, photos from wherever I happened to be standing, and what is on loop while
-            I code.
+            turns itself, the career graph, photos from wherever I happened to be standing, and what is on
+            loop while I code.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -95,6 +96,21 @@ export default function PersonalPage() {
         </Container>
       </section>
 
+      <section id="career" className="relative pt-16 sm:pt-24">
+        <PixelDrift />
+        <Container>
+          <Reveal>
+            <SectionHeading kicker="Same story, as a chart" title="The career graph" />
+            <p className="mt-3 max-w-2xl text-sm text-white/60">
+              x axis: years. y axis: ambition. Hover the peaks or pick a year.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-8">
+            <CareerCurve />
+          </Reveal>
+        </Container>
+      </section>
+
       <section id="beyond" className="relative pt-16 pb-20 sm:pt-24">
         <PixelDrift />
         <Container>
@@ -123,7 +139,7 @@ export default function PersonalPage() {
         </Container>
       </section>
 
-      <SiteFooter />
+      <SiteFooter arcade />
     </main>
   )
 }

@@ -8,12 +8,14 @@ type Action = { label: string; hint: string; href: string; external?: boolean }
 
 const ACTIONS: Action[] = [
   { label: 'Go home', hint: 'page', href: '/' },
-  { label: 'Experience: the career load curve', hint: 'section', href: '/#experience' },
+  { label: 'Selected work: three results, one number each', hint: 'section', href: '/#work' },
+  { label: 'Experience: my work through the years', hint: 'section', href: '/#experience' },
   { label: 'All projects', hint: 'page', href: '/projects' },
   { label: 'About: how I build', hint: 'section', href: '/#about' },
   { label: 'Off the clock: games, photos, music', hint: 'page', href: '/personal' },
   { label: 'The arcade: forecast game + tech wordle', hint: 'games', href: '/personal#arcade' },
   { label: 'The idle cube: a Rubik\'s cube that solves nothing', hint: 'generative', href: '/personal#cube' },
+  { label: 'The career graph: years vs ambition', hint: 'chart', href: '/personal#career' },
   { label: 'Beyond work: photos + music', hint: 'section', href: '/personal#beyond' },
   { label: 'Download resume', hint: 'pdf', href: '/resume?from=palette' },
   { label: 'Email Mayank', hint: 'contact', href: 'mailto:mayankdixit132001@gmail.com', external: true },

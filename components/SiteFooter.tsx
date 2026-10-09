@@ -1,10 +1,10 @@
 import { Container } from '@/components/Container'
 import { PixelDrift } from '@/components/PixelDrift'
 
-export function SiteFooter() {
+export function SiteFooter({ arcade = false }: { arcade?: boolean }) {
   return (
     <footer className="relative overflow-hidden border-t border-white/10 pb-10 pt-14">
-      <PixelDrift />
+      {arcade ? <PixelDrift /> : null}
       <Container>
         <p className="text-outline select-none whitespace-nowrap text-center font-space text-[11.5vw] font-bold leading-none tracking-tight sm:text-[7.5vw]">
           MAYANK DIXIT

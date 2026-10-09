@@ -175,3 +175,40 @@ export const moreProjects: Project[] = [
       'Research on robust diagnostics for industrial vibration data.'
   }
 ]
+
+// Three results for the top of the home page. Every number here already
+// appears in the project highlights above; keep them in sync.
+export type SelectedWork = {
+  slug: string
+  kicker: string
+  metric: string
+  metricLabel: string
+  result: string
+}
+
+export const selectedWork: SelectedWork[] = [
+  {
+    slug: 'pjm-load-forecasting',
+    kicker: 'Power trading · 2026',
+    metric: '20 of 20',
+    metricLabel: 'PJM zones where my forecast beat the grid operator’s own',
+    result:
+      'Real time hourly load forecast with a 14 day horizon, refreshed four times a day with 90% uncertainty bands. Day ahead features improved 15 of 16 utilities across two held out years and were merged into the production cycle.'
+  },
+  {
+    slug: 'gentari-renewables-ml',
+    kicker: 'Clean energy · 2023 to 2025',
+    metric: '~100 hours',
+    metricLabel: 'saved every week across 40 solar and wind plants',
+    result:
+      'Automated regulatory uploads for 40 plants, replaced the vendor solar forecast with an in house LSTM that beat its accuracy, and launched a private RAG assistant that cut analyst retrieval time and API spend.'
+  },
+  {
+    slug: 'mcp-aero-design',
+    kicker: 'Agentic AI · Boeing funded · now',
+    metric: '3 solvers',
+    metricLabel: 'geometry, CFD and engine sizing, agent callable over MCP',
+    result:
+      'An orchestration layer that drives engineering tools as typed, session isolated MCP servers with structured outputs and reproducible test runs. Under NDA, so this is the high level view.'
+  }
+]

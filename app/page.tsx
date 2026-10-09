@@ -2,18 +2,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { SectionHeading } from '@/components/SectionHeading'
-import { ProjectCard } from '@/components/ProjectCard'
 import { TypedWords } from '@/components/TypedWords'
-import { StatTicker } from '@/components/StatTicker'
-import { CareerCurve } from '@/components/CareerCurve'
 import { TerminalCard } from '@/components/TerminalCard'
-import { PixelDrift } from '@/components/PixelDrift'
 import { WorkTimeline } from '@/components/WorkTimeline'
 import { Tilt } from '@/components/Tilt'
 import { Reveal } from '@/components/Reveal'
 import { TrackedLink } from '@/components/TrackedLink'
 import { SiteFooter } from '@/components/SiteFooter'
-import { featuredProjects } from '@/data/projects'
+import { SelectedWork } from '@/components/SelectedWork'
 
 type GitHubEvent = { type: string; repo?: { name?: string }; created_at: string }
 
@@ -55,7 +51,6 @@ export default async function HomePage() {
     <main>
       {/* Hero doubles as the about section: intro, how I build, and every link. */}
       <section id="about" className="relative pt-14 sm:pt-20">
-        <PixelDrift />
         <Container>
           <div className="grid items-start gap-10 md:grid-cols-[1.2fr_0.8fr]">
             <div>
@@ -185,8 +180,8 @@ export default async function HomePage() {
 
           <div className="mt-14 flex justify-center">
             <a
-              href="#experience"
-              aria-label="Scroll to experience"
+              href="#work"
+              aria-label="Scroll to selected work"
               className="group flex flex-col items-center gap-1.5 text-white/40 transition hover:text-accent"
             >
               <span className="text-[10px] font-medium uppercase tracking-[0.3em]">the work</span>
@@ -204,8 +199,29 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section className="mt-14 border-y border-white/10 bg-white/[0.02] sm:mt-20">
-        <StatTicker />
+      <section id="work" className="pt-16 sm:pt-24">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              kicker="Selected work"
+              title="Shipped, measured, still running"
+              right={
+                <Link
+                  href="/projects"
+                  className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
+                >
+                  All projects
+                </Link>
+              }
+            />
+            <p className="mt-3 max-w-2xl text-sm text-white/60">
+              Three results, one number each. The full write ups are a click away.
+            </p>
+          </Reveal>
+          <div className="mt-8">
+            <SelectedWork />
+          </div>
+        </Container>
       </section>
 
       <section id="experience" className="pt-16 sm:pt-24">
@@ -223,47 +239,6 @@ export default async function HomePage() {
       </section>
 
       <section className="pt-16 sm:pt-24">
-        <Container>
-          <Reveal>
-            <SectionHeading kicker="Same story, as a chart" title="The career graph" />
-            <p className="mt-3 max-w-2xl text-sm text-white/60">
-              x axis: years. y axis: ambition. Hover the peaks or pick a year.
-            </p>
-          </Reveal>
-          <Reveal delay={0.1} className="mt-8">
-            <CareerCurve />
-          </Reveal>
-        </Container>
-      </section>
-
-      <section className="relative pt-16 sm:pt-24">
-        <PixelDrift />
-        <Container>
-          <SectionHeading
-            kicker="A few work examples"
-            title="Projects with real systems, data, and constraints"
-            right={
-              <Link
-                href="/projects"
-                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
-              >
-                See all
-              </Link>
-            }
-          />
-
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {featuredProjects.map((p, i) => (
-            <Reveal key={p.slug} delay={(i % 2) * 0.08} className="h-full">
-              <ProjectCard project={p} />
-            </Reveal>
-          ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="relative pt-16 sm:pt-24">
-        <PixelDrift />
         <Container>
           <SectionHeading kicker="Publications" title="Selected papers" />
 
@@ -297,31 +272,19 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* The arcade, photos, and music now live on /personal. */}
-      <section className="relative pb-20 pt-16 sm:pt-24">
-        <PixelDrift />
+      {/* Everything playful lives on /personal. */}
+      <section className="pb-20 pt-16 sm:pt-24">
         <Container>
           <Reveal>
             <Link
               href="/personal"
-              className="glass group block rounded-3xl p-6 transition hover:border-white/25 sm:p-8"
+              className="group flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-sm text-white/55 transition hover:text-white"
             >
-              <p className="font-pixel text-[10px] tracking-wider text-accent/70">INSERT COIN</p>
-              <div className="mt-3 flex flex-wrap items-end justify-between gap-5">
-                <div>
-                  <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                    Off the clock
-                  </h2>
-                  <p className="mt-2 max-w-xl text-sm text-white/70">
-                    Three games I built (tech wordle, bit flip, beat the forecast), a Rubik&apos;s
-                    cube that turns itself, photos from wherever I was standing, and what is on
-                    loop while I code.
-                  </p>
-                </div>
-                <span className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white transition group-hover:bg-white/10">
-                  Open the arcade →
-                </span>
-              </div>
+              <span>
+                Off the clock: three games, a Rubik&apos;s cube that turns itself, photos, and what is on loop
+                while I code.
+              </span>
+              <span className="font-semibold text-accent">Have a look →</span>
             </Link>
           </Reveal>
         </Container>
