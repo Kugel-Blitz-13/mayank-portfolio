@@ -6,6 +6,7 @@ import { PhotoMosaic } from '@/components/PhotoMosaic'
 import { PhotoGallery } from '@/components/PhotoGallery'
 import { MusicCard } from '@/components/MusicCard'
 import { GameArcade } from '@/components/GameArcade'
+import { IdleCube } from '@/components/IdleCube'
 import { PixelDrift } from '@/components/PixelDrift'
 import { Reveal } from '@/components/Reveal'
 import { SiteFooter } from '@/components/SiteFooter'
@@ -31,8 +32,9 @@ export default function PersonalPage() {
             <Link href="/" className="text-accent underline decoration-dotted hover:text-white">
               home page
             </Link>
-            . This is everything else: three games I built because the idea would not leave me alone,
-            photos from wherever I happened to be standing, and what is on loop while I code.
+            . This is everything else: three games I built because the idea would not leave me alone, a Rubik&apos;s cube that
+            turns itself, photos from wherever I happened to be standing, and what is on loop while
+            I code.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -41,6 +43,12 @@ export default function PersonalPage() {
               className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:opacity-90"
             >
               Play something
+            </a>
+            <a
+              href="#cube"
+              className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
+            >
+              Watch the cube
             </a>
             <a
               href="#beyond"
@@ -70,6 +78,25 @@ export default function PersonalPage() {
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
             <GameArcade />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section id="cube" className="relative pt-16 sm:pt-24">
+        <PixelDrift />
+        <Container>
+          <Reveal>
+            <p className="font-pixel text-[10px] tracking-wider text-accent/70">IDLE HANDS</p>
+            <SectionHeading kicker="Generative" title="The idle cube" />
+            <p className="mt-3 max-w-2xl text-sm text-white/60">
+              A Rubik&apos;s cube that solves nothing. Twenty seven cubies, every sticker a small
+              patchwork of glyphs, projected by hand onto a 2D canvas with no WebGL and no
+              libraries. Every sixth move the three corner bands counter rotate like hexagonal
+              conveyor belts. Started life as a take home; I liked it too much to let it go.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-8">
+            <IdleCube />
           </Reveal>
         </Container>
       </section>

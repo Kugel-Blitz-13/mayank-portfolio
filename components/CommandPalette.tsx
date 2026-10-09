@@ -13,6 +13,7 @@ const ACTIONS: Action[] = [
   { label: 'About: how I build', hint: 'section', href: '/#about' },
   { label: 'Off the clock: games, photos, music', hint: 'page', href: '/personal' },
   { label: 'The arcade: forecast game + tech wordle', hint: 'games', href: '/personal#arcade' },
+  { label: 'The idle cube: a Rubik\'s cube that solves nothing', hint: 'generative', href: '/personal#cube' },
   { label: 'Beyond work: photos + music', hint: 'section', href: '/personal#beyond' },
   { label: 'Download resume', hint: 'pdf', href: '/resume?from=palette' },
   { label: 'Email Mayank', hint: 'contact', href: 'mailto:mayankdixit132001@gmail.com', external: true },

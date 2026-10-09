@@ -313,8 +313,9 @@ export default async function HomePage() {
                     Off the clock
                   </h2>
                   <p className="mt-2 max-w-xl text-sm text-white/70">
-                    Three games I built (tech wordle, bit flip, beat the forecast), photos from
-                    wherever I was standing, and what is on loop while I code.
+                    Three games I built (tech wordle, bit flip, beat the forecast), a Rubik&apos;s
+                    cube that turns itself, photos from wherever I was standing, and what is on
+                    loop while I code.
                   </p>
                 </div>
                 <span className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white transition group-hover:bg-white/10">
