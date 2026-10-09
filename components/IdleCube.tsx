@@ -76,10 +76,6 @@ const STEP = 1 / DOTS
 const C = CONFIG.colors
 const T = CONFIG.timing
 
-const CUBE_STATS = {
-  cubies: 27,
-  glyphs: 6 * N * N * DOTS * DOTS
-}
 
 // =====================================================================
 //  Maths
@@ -860,27 +856,9 @@ export function IdleCube({ className }: { className?: string }) {
         <div className="pointer-events-none absolute bottom-4 left-4 font-pixel text-[10px] tracking-wider text-accent/80">
           {move.label === 'swirl' ? '⟳ SWIRL' : move.label}
         </div>
-        <div className="pointer-events-none absolute bottom-4 right-4 hidden font-pixel text-[8px] tracking-wider text-white/30 sm:block">
-          HOVER TO TILT · CLICK TO SWIRL
+        <div className="pointer-events-none absolute bottom-4 right-4 font-pixel text-[8px] tracking-wider text-white/30">
+          <span className="hidden sm:inline">HOVER TO TILT · </span>CLICK TO SWIRL
         </div>
-      </div>
-
-      <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-3 text-xs text-white/50">
-        <div className="flex flex-wrap gap-x-5 gap-y-1">
-          <span>
-            <span className="text-white/80">{CUBE_STATS.cubies}</span> cubies
-          </span>
-          <span>
-            <span className="text-white/80">{CUBE_STATS.glyphs.toLocaleString('en-US')}</span> glyphs
-          </span>
-          <span>
-            <span className="text-white/80">2D</span> canvas, hand rolled projection
-          </span>
-          <span>
-            <span className="text-white/80">0</span> dependencies
-          </span>
-        </div>
-        <span className="text-white/40">Hover to tilt, click for a swirl.</span>
       </div>
     </div>
   )

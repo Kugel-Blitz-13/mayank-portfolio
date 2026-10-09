@@ -88,12 +88,6 @@ export default function PersonalPage() {
           <Reveal>
             <p className="font-pixel text-[10px] tracking-wider text-accent/70">IDLE HANDS</p>
             <SectionHeading kicker="Generative" title="The idle cube" />
-            <p className="mt-3 max-w-2xl text-sm text-white/60">
-              A Rubik&apos;s cube that solves nothing. Twenty seven cubies, every sticker a small
-              patchwork of glyphs, projected by hand onto a 2D canvas with no WebGL and no
-              libraries. Every sixth move the three corner bands counter rotate like hexagonal
-              conveyor belts. Started life as a take home; I liked it too much to let it go.
-            </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
             <IdleCube />
