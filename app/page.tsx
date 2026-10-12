@@ -10,7 +10,6 @@ import { Reveal } from '@/components/Reveal'
 import { TrackedLink } from '@/components/TrackedLink'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SelectedWork } from '@/components/SelectedWork'
-import { HeroShapes } from '@/components/GlyphShapes'
 
 type GitHubEvent = { type: string; repo?: { name?: string }; created_at: string }
 
@@ -38,8 +37,7 @@ export default async function HomePage() {
   const lastShip = await getLastShip()
   return (
     <main>
-      <section id="about" className="relative overflow-x-clip pt-14 sm:pt-20">
-        <HeroShapes />
+      <section id="about" className="relative pt-14 sm:pt-20">
         <Container>
           <div className="grid items-start gap-10 md:grid-cols-[1.2fr_0.8fr] lg:gap-14">
             <div>

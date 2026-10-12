@@ -558,37 +558,26 @@ export function GlyphShape({
   )
 }
 
-// The shapes around the home hero, placed in its empty space. Wide screens:
-// the photo's top corner plus one shape in each side gutter. Narrower
-// screens: the photo corner plus a pair flanking the scroll arrow.
+// The shapes in the Off the clock hero. The intro text sits on the left,
+// so they float in the empty right half. Phones get one, tucked top right.
 // Classes position each shape's centre.
-export function HeroShapes() {
+export function OffTheClockShapes() {
   return (
     <>
       <GlyphShape
         kind="icosa"
         seed={11}
-        className="-translate-y-1/2 left-[calc(100%-46px)] top-[30px] h-[128px] w-[128px] lg:left-[min(calc(50%+544px),calc(100%-40px))] lg:top-[86px] lg:h-[210px] lg:w-[210px]"
+        className="-translate-y-1/2 left-[calc(100%-46px)] top-[30px] h-[128px] w-[128px] lg:left-[calc(50%+400px)] lg:top-[170px] lg:h-[220px] lg:w-[220px]"
       />
       <GlyphShape
         kind="octa"
         seed={5}
-        className="hidden -translate-y-1/2 left-[calc(50%-600px)] top-[300px] h-[160px] w-[160px] min-[1360px]:block"
-      />
-      <GlyphShape
-        kind="octa"
-        seed={5}
-        className="bottom-[22px] translate-y-1/2 left-[calc(50%+118px)] h-[112px] w-[112px] min-[1360px]:hidden"
+        className="hidden -translate-y-1/2 left-[calc(50%+250px)] top-[350px] h-[150px] w-[150px] xl:block"
       />
       <GlyphShape
         kind="tetra"
         seed={3}
-        className="bottom-[22px] translate-y-1/2 left-[calc(50%-118px)] h-[120px] w-[120px] lg:left-[calc(50%-150px)] lg:h-[140px] lg:w-[140px] min-[1360px]:hidden"
-      />
-      <GlyphShape
-        kind="tetra"
-        seed={3}
-        className="hidden -translate-y-1/2 left-[calc(50%+604px)] top-[640px] h-[160px] w-[160px] min-[1360px]:block"
+        className="hidden -translate-y-1/2 left-[calc(50%+530px)] top-[330px] h-[150px] w-[150px] xl:block"
       />
     </>
   )

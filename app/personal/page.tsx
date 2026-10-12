@@ -10,6 +10,7 @@ import { IdleCube } from '@/components/IdleCube'
 import { PixelDrift } from '@/components/PixelDrift'
 import { Reveal } from '@/components/Reveal'
 import { CareerCurve } from '@/components/CareerCurve'
+import { OffTheClockShapes } from '@/components/GlyphShapes'
 import { SiteFooter } from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
@@ -21,8 +22,9 @@ export const metadata: Metadata = {
 export default function PersonalPage() {
   return (
     <main>
-      <section className="relative pt-14 sm:pt-20">
+      <section className="relative overflow-x-clip pt-14 sm:pt-20">
         <PixelDrift />
+        <OffTheClockShapes />
         <Container>
           <p className="font-pixel text-[10px] tracking-wider text-accent/70">PLAYER TWO</p>
           <h1 className="mt-4 text-balance font-space text-4xl font-semibold leading-[1.1] sm:text-5xl">
