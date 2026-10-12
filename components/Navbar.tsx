@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
+import { MiniCube } from '@/components/IdleCube'
 
 const nav = [
   { href: '/', label: 'Home' },
@@ -17,7 +18,7 @@ export function Navbar() {
     <div className="sticky top-0 z-50 border-b border-white/5 bg-bg/60 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
         <Link href="/" className="group inline-flex items-center gap-2">
-          <span className="inline-block h-2 w-2 rounded-full bg-[rgb(var(--accent))] shadow-[0_0_18px_rgba(45,212,191,0.7)]" />
+          <MiniCube className="h-8 w-8 -my-1" />
           <span className="text-sm font-medium tracking-wide text-white/90 group-hover:text-white">
             Mayank Dixit
           </span>

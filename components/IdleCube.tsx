@@ -1,6 +1,31 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import {
+  GLYPHS,
+  I3,
+  PALETTE,
+  clamp01,
+  cross,
+  dot3,
+  drawGlyph,
+  easePow,
+  hexToRgb,
+  mix,
+  mulMM,
+  mulMV,
+  mulberry32,
+  normalize,
+  reducedMotionQuery,
+  rgba,
+  rotAbout,
+  rotAxis,
+  roundM,
+  transpose,
+  type Glyph,
+  type Mat,
+  type Vec
+} from '@/lib/glyph'
 
 // A Rubik's cube that solves nothing. 27 cubies, every sticker a little
 // patchwork of glyphs, projected by hand onto a 2D canvas. No WebGL, no
@@ -30,18 +55,7 @@ const CONFIG = {
   colors: {
     // Hue-ordered loop built from the site palette: teal and sky are the
     // accents, the rest walk the wheel so neighbouring hues blend cleanly.
-    palette: [
-      '#2dd4bf', // teal (accent)
-      '#38bdf8', // cyan
-      '#60a5fa', // sky (accent2)
-      '#818cf8', // indigo
-      '#a78bfa', // violet
-      '#e879f9', // fuchsia
-      '#fb7185', // rose
-      '#fbbf24', // amber
-      '#a3e635', // lime
-      '#34d399' // emerald
-    ],
+    palette: PALETTE,
     hueSpread: 2, // max palette steps between a sticker's two colours
     inner: 'rgba(255,255,255,0.22)' // dots on inner faces exposed mid-turn
   },
@@ -62,94 +76,28 @@ const CONFIG = {
     glow: true
   },
 
-  glyphs: ['circle', 'ring', 'triangle', 'square', 'hollowSquare'] as const
+  glyphs: GLYPHS
 }
 
-type Glyph = (typeof CONFIG.glyphs)[number]
-type Vec = number[]
-type Mat = number[]
 
 const N = 3
 const HALF = N / 2
-const DOTS = CONFIG.dots
-const STEP = 1 / DOTS
 const C = CONFIG.colors
 const T = CONFIG.timing
+// Reduce Motion: keep turning, but slowly, one layer at a time, no swirls.
+const CALM: typeof T = {
+  turn: 1500,
+  easePower: 3,
+  pause: 2600,
+  swirl: 2400,
+  swirlEvery: Infinity,
+  doubleChance: 0,
+  tripleChance: 0,
+  layerLag: 0
+}
 
 
-// =====================================================================
-//  Maths
-// =====================================================================
-function mulberry32(a: number) {
-  return () => {
-    a |= 0
-    a = (a + 0x6d2b79f5) | 0
-    let t = Math.imul(a ^ (a >>> 15), 1 | a)
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
-const hexToRgb = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16))
-const rgba = (hex: string, a: number) => {
-  const [r, g, b] = hexToRgb(hex)
-  return `rgba(${r},${g},${b},${a})`
-}
-const mix = (a: number[], b: number[], t: number) => {
-  const c = a.map((v, i) => Math.round(v + (b[i] - v) * t))
-  return `rgb(${c[0]},${c[1]},${c[2]})`
-}
-const easeInOut = (t: number) => {
-  const p = T.easePower
-  if (t <= 0) return 0
-  if (t >= 1) return 1
-  return t < 0.5 ? 0.5 * Math.pow(2 * t, p) : 1 - 0.5 * Math.pow(2 * (1 - t), p)
-}
-const clamp01 = (x: number) => Math.max(0, Math.min(1, x))
-
-const I3: Mat = [1, 0, 0, 0, 1, 0, 0, 0, 1]
-const mulMV = (m: Mat, v: Vec): Vec => [
-  m[0] * v[0] + m[1] * v[1] + m[2] * v[2],
-  m[3] * v[0] + m[4] * v[1] + m[5] * v[2],
-  m[6] * v[0] + m[7] * v[1] + m[8] * v[2]
-]
-const mulMM = (a: Mat, b: Mat): Mat => {
-  const r = new Array<number>(9)
-  for (let i = 0; i < 3; i++)
-    for (let j = 0; j < 3; j++)
-      r[i * 3 + j] = a[i * 3] * b[j] + a[i * 3 + 1] * b[3 + j] + a[i * 3 + 2] * b[6 + j]
-  return r
-}
-const dot3 = (a: Vec, b: Vec) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
-const cross = (a: Vec, b: Vec): Vec => [
-  a[1] * b[2] - a[2] * b[1],
-  a[2] * b[0] - a[0] * b[2],
-  a[0] * b[1] - a[1] * b[0]
-]
-const normalize = (v: Vec): Vec => {
-  const l = Math.hypot(v[0], v[1], v[2])
-  return v.map((x) => x / l)
-}
-const transpose = (m: Mat): Mat => [m[0], m[3], m[6], m[1], m[4], m[7], m[2], m[5], m[8]]
-function rotAxis(axis: number, a: number): Mat {
-  const c = Math.cos(a)
-  const s = Math.sin(a)
-  if (axis === 0) return [1, 0, 0, 0, c, -s, 0, s, c]
-  if (axis === 1) return [c, 0, s, 0, 1, 0, -s, 0, c]
-  return [c, -s, 0, s, c, 0, 0, 0, 1]
-}
-// Rodrigues rotation about an arbitrary unit axis.
-function rotAbout(k: Vec, a: number): Mat {
-  const c = Math.cos(a)
-  const s = Math.sin(a)
-  const t = 1 - c
-  const [x, y, z] = k
-  return [
-    t * x * x + c, t * x * y - s * z, t * x * z + s * y,
-    t * x * y + s * z, t * y * y + c, t * y * z - s * x,
-    t * x * z - s * y, t * y * z + s * x, t * z * z + c
-  ]
-}
-const roundM = (m: number[]) => m.map((v) => Math.round(v))
+const easeInOut = (t: number) => easePow(t, T.easePower)
 
 // =====================================================================
 //  Model
@@ -182,7 +130,8 @@ type Swirl = { rotFor: (c: Cubie) => Mat; dots: SwirlDot[]; start: number; end: 
 
 export type CubeMove = { label: string; count: number }
 
-function buildCubies(): Cubie[] {
+function buildCubies(DOTS: number): Cubie[] {
+  const STEP = 1 / DOTS
   const rand = mulberry32(CONFIG.seed)
   const pick = <X,>(arr: readonly X[]) => arr[Math.floor(rand() * arr.length)]
 
@@ -272,9 +221,25 @@ type Engine = {
   destroy: () => void
 }
 
-function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void): Engine {
+type EngineOpts = { dots: number; size: number; glow: boolean; tilt: number }
+
+const VARIANTS: Record<'full' | 'mini', EngineOpts> = {
+  full: { dots: CONFIG.dots, size: CONFIG.size, glow: CONFIG.look.glow, tilt: CONFIG.camera.tilt },
+  mini: { dots: 2, size: 0.94, glow: false, tilt: 0 }
+}
+
+function createEngine(
+  canvas: HTMLCanvasElement,
+  onMove: (m: CubeMove) => void,
+  opts: EngineOpts
+): Engine {
   const ctx = canvas.getContext('2d')!
-  const cubies = buildCubies()
+  const cubies = buildCubies(opts.dots)
+  const STEP = 1 / opts.dots
+
+  const motionQuery = reducedMotionQuery()
+  let reducedMotion = motionQuery.matches
+  let tm = reducedMotion ? CALM : T
 
   // --- camera (recomputed when the pointer tilts the view) ------------
   const baseZ = normalize(CONFIG.camera.direction)
@@ -295,17 +260,17 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
 
   function setCamera(tx: number, ty: number) {
     // Yaw about world up, then pitch about the camera's right axis.
-    const yaw = rotAbout(normalize(CONFIG.camera.up), -tx * CONFIG.camera.tilt)
+    const yaw = rotAbout(normalize(CONFIG.camera.up), -tx * opts.tilt)
     let camZ = mulMV(yaw, baseZ)
     let camX = normalize(cross(CONFIG.camera.up, camZ))
-    const pitch = rotAbout(camX, ty * CONFIG.camera.tilt)
+    const pitch = rotAbout(camX, ty * opts.tilt)
     camZ = mulMV(pitch, camZ)
     camX = normalize(cross(CONFIG.camera.up, camZ))
     const camY = cross(camZ, camX)
     VIEW = [...camX, ...camY, ...camZ]
     TAN_HALF_FOV = Math.tan((CONFIG.camera.fov * Math.PI) / 360)
 
-    // Eye distance so the resting cube's projected height is CONFIG.size
+    // Eye distance so the resting cube's projected height is opts.size
     // of the canvas: a*(1/(D+c) + 1/(D-c)) = 2*size*tanHalfFov.
     let a = 0
     let c = 0
@@ -318,7 +283,7 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
             c = Math.abs(z)
           }
         }
-    const s = 2 * CONFIG.size * TAN_HALF_FOV
+    const s = 2 * opts.size * TAN_HALF_FOV
     DIST = (a + Math.sqrt(a * a + s * s * c * c)) / s
     EYE = camZ.map((v) => v * DIST)
 
@@ -360,23 +325,23 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
   let turn: Turn | null = null
   let swirl: Swirl | null = null
   let nextMoveAt = 0
-  let turnsUntilSwirl = T.swirlEvery - 1
+  let turnsUntilSwirl = tm.swirlEvery - 1
   let moveCount = 0
 
   function randomTurn(now: number): Turn {
     const axis = Math.floor(Math.random() * 3)
     const r = Math.random()
     let layers: number[]
-    if (r < T.tripleChance) layers = [-1, 0, 1]
-    else if (r < T.tripleChance + T.doubleChance) layers = Math.random() < 0.5 ? [-1, 0] : [0, 1]
+    if (r < tm.tripleChance) layers = [-1, 0, 1]
+    else if (r < tm.tripleChance + tm.doubleChance) layers = Math.random() < 0.5 ? [-1, 0] : [0, 1]
     else layers = [Math.floor(Math.random() * 3) - 1]
     if (Math.random() < 0.5) layers.reverse()
     const dir = Math.random() < 0.5 ? 1 : -1
-    const starts = layers.map((_, i) => now + i * T.layerLag)
-    return { axis, layers, dir, starts, start: now, end: starts[starts.length - 1] + T.turn }
+    const starts = layers.map((_, i) => now + i * tm.layerLag)
+    return { axis, layers, dir, starts, start: now, end: starts[starts.length - 1] + tm.turn }
   }
   const layerIndex = (c: Cubie) => (turn ? turn.layers.indexOf(c.pos[turn.axis]) : -1)
-  const layerProg = (i: number, now: number) => clamp01((now - turn!.starts[i]) / T.turn)
+  const layerProg = (i: number, now: number) => clamp01((now - turn!.starts[i]) / tm.turn)
   const layerAngle = (i: number, now: number) => (turn!.dir * easeInOut(layerProg(i, now)) * Math.PI) / 2
   const angleOfLayer = (l: number, now: number) => {
     const i = turn ? turn.layers.indexOf(l) : -1
@@ -446,7 +411,7 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
         }
       }
     }
-    const s: Swirl = { rotFor, dots, start: now, end: now + T.swirl }
+    const s: Swirl = { rotFor, dots, start: now, end: now + tm.swirl }
     layoutSwirl(s)
     return s
   }
@@ -484,13 +449,13 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
     if (turn && now >= turn.end) {
       commitTurn(turn)
       turn = null
-      nextMoveAt = now + T.pause
+      nextMoveAt = now + tm.pause
       needsDraw = true
     }
     if (swirl && now >= swirl.end) {
       commitSwirl(swirl)
       swirl = null
-      nextMoveAt = now + T.pause
+      nextMoveAt = now + tm.pause
       needsDraw = true
     }
     if (!turn && !swirl && now >= nextMoveAt) {
@@ -498,7 +463,7 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
         if (tiltSettled()) {
           swirlPending = false
           swirl = startSwirl(now)
-          turnsUntilSwirl = T.swirlEvery - 1
+          turnsUntilSwirl = tm.swirlEvery - 1
           report('swirl')
         } else {
           swirlPending = true
@@ -530,7 +495,7 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
     ctx.globalAlpha = 1
     ctx.clearRect(0, 0, W, H)
     ctx.lineJoin = 'miter'
-    if (CONFIG.look.glow) {
+    if (opts.glow) {
       const r = Math.min(W, H) * 0.55
       const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, r)
       g.addColorStop(0, 'rgba(45,212,191,0.16)')
@@ -598,7 +563,7 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
       ctx.lineWidth = Math.max(1, (size * (1 - CONFIG.ringHole)) / 2)
       for (const d of f.dots) {
         const [x, y] = project(world(d.local))
-        drawGlyph(d.glyph, x, y, size, d.color)
+        drawGlyph(ctx, d.glyph, x, y, size, d.color)
       }
 
       const filmAlpha = CONFIG.look.filmPeak * Math.sin(Math.PI * v.prog)
@@ -634,47 +599,7 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
     ctx.lineWidth = Math.max(1, (glyphSize * (1 - CONFIG.ringHole)) / 2)
     for (const d of swirl!.dots) {
       const [x, y] = fromRing(d.h0 + (d.h1 - d.h0) * s, d.phi0 + d.dphi * s)
-      drawGlyph(d.glyph, x, y, glyphSize, d.color)
-    }
-  }
-
-  function drawGlyph(kind: Glyph, x: number, y: number, size: number, color: string) {
-    const r = size / 2
-    ctx.fillStyle = color
-    ctx.strokeStyle = color
-    ctx.beginPath()
-    switch (kind) {
-      case 'circle':
-        ctx.arc(x, y, r, 0, Math.PI * 2)
-        ctx.fill()
-        break
-      case 'ring':
-        ctx.arc(x, y, Math.max(0.1, r - ctx.lineWidth / 2), 0, Math.PI * 2)
-        ctx.stroke()
-        break
-      case 'triangle': {
-        const R = r * 1.18
-        const h = R * Math.sin((2 * Math.PI) / 3)
-        const w = -R * Math.cos((2 * Math.PI) / 3)
-        ctx.moveTo(x, y - R)
-        ctx.lineTo(x + h, y + w)
-        ctx.lineTo(x - h, y + w)
-        ctx.closePath()
-        ctx.fill()
-        break
-      }
-      case 'square': {
-        const s = r * 1.76
-        ctx.rect(x - s / 2, y - s / 2, s, s)
-        ctx.fill()
-        break
-      }
-      case 'hollowSquare': {
-        const s = Math.max(0.2, r * 1.76 - ctx.lineWidth)
-        ctx.rect(x - s / 2, y - s / 2, s, s)
-        ctx.stroke()
-        break
-      }
+      drawGlyph(ctx, d.glyph, x, y, glyphSize, d.color)
     }
   }
 
@@ -692,8 +617,6 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
   let active = false
   const clock = () => performance.now() - pausedOffset
 
-  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-  let reducedMotion = motionQuery.matches
 
   function stepTilt() {
     // Freeze the tilt during a swirl (its path is fixed in screen space),
@@ -717,10 +640,6 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
     if (H === 0) return
     const now = clock()
     if (!reducedMotion) stepTilt()
-    if (reducedMotion) {
-      if (needsDraw) draw(now)
-      return
-    }
     const animating = advance(now)
     if (animating || needsDraw) draw(now)
   }
@@ -756,14 +675,18 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
 
   const onMotion = (e: MediaQueryListEvent) => {
     reducedMotion = e.matches
-    if (reducedMotion) settle()
-    else nextMoveAt = clock() + T.pause
+    settle()
+    tm = reducedMotion ? CALM : T
+    turnsUntilSwirl = tm.swirlEvery - 1
+    swirlPending = false
+    if (reducedMotion) setCamera((tiltX = 0), (tiltY = 0))
+    nextMoveAt = clock() + tm.pause
     needsDraw = true
   }
   motionQuery.addEventListener('change', onMotion)
 
   resize()
-  nextMoveAt = clock() + T.pause
+  nextMoveAt = clock() + tm.pause
   draw(clock())
 
   return {
@@ -777,7 +700,11 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
       tiltTY = y ?? 0
     },
     swirlNow() {
-      if (reducedMotion) return
+      // Under Reduce Motion a tap asks for one calm turn instead.
+      if (reducedMotion) {
+        if (!turn && !swirl) nextMoveAt = clock()
+        return
+      }
       swirlPending = true
       if (!turn && !swirl) nextMoveAt = clock()
       needsDraw = true
@@ -793,25 +720,29 @@ function createEngine(canvas: HTMLCanvasElement, onMove: (m: CubeMove) => void):
 // =====================================================================
 //  Component
 // =====================================================================
-export function IdleCube({ className }: { className?: string }) {
-  const wrapRef = useRef<HTMLDivElement>(null)
+function useCubeEngine(
+  variant: 'full' | 'mini',
+  onMove: (m: CubeMove) => void
+) {
+  const wrapRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const engineRef = useRef<Engine | null>(null)
-  const [move, setMove] = useState<CubeMove>({ label: '--', count: 0 })
 
   useEffect(() => {
     const wrap = wrapRef.current
     const canvas = canvasRef.current
     if (!wrap || !canvas) return
 
-    const engine = createEngine(canvas, setMove)
+    const engine = createEngine(canvas, onMove, VARIANTS[variant])
     engineRef.current = engine
 
     const ro = new ResizeObserver(() => engine.resize())
     ro.observe(wrap)
 
+    // Several entries can arrive in one batch during a fast flick; the
+    // last one is the current state.
     const io = new IntersectionObserver(
-      (entries) => engine.setActive(entries[0]?.isIntersecting ?? false),
+      (entries) => engine.setActive(entries[entries.length - 1]?.isIntersecting ?? false),
       { rootMargin: '80px' }
     )
     io.observe(wrap)
@@ -822,26 +753,76 @@ export function IdleCube({ className }: { className?: string }) {
       engine.destroy()
       engineRef.current = null
     }
-  }, [])
+    // onMove is a state setter or a no-op; the engine is built once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [variant])
 
-  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === 'touch') return
+  return { wrapRef, canvasRef, engineRef }
+}
+
+const noop = () => {}
+
+// A tiny cube for the navbar, next to the name. Hovering the name swirls it.
+export function MiniCube({ className }: { className?: string }) {
+  const { wrapRef, canvasRef, engineRef } = useCubeEngine('mini', noop)
+
+  useEffect(() => {
+    const host = wrapRef.current?.closest('a') ?? wrapRef.current
+    if (!host) return
+    const swirl = () => engineRef.current?.swirlNow()
+    host.addEventListener('mouseenter', swirl)
+    return () => host.removeEventListener('mouseenter', swirl)
+  }, [wrapRef, engineRef])
+
+  return (
+    <span
+      ref={wrapRef as React.RefObject<HTMLSpanElement>}
+      aria-hidden="true"
+      className={`relative inline-block shrink-0 ${className ?? 'h-7 w-7'}`}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 block h-full w-full" />
+    </span>
+  )
+}
+
+export function IdleCube({ className }: { className?: string }) {
+  const [move, setMove] = useState<CubeMove>({ label: '--', count: 0 })
+  const { wrapRef, canvasRef, engineRef } = useCubeEngine('full', setMove)
+  const touchDown = useRef(false)
+
+  const aim = (e: React.PointerEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
     const x = ((e.clientX - r.left) / r.width) * 2 - 1
     const y = ((e.clientY - r.top) / r.height) * 2 - 1
     engineRef.current?.setPointer(Math.max(-1, Math.min(1, x)), Math.max(-1, Math.min(1, y)))
   }
+  const release = () => {
+    touchDown.current = false
+    engineRef.current?.setPointer(null, null)
+  }
 
   return (
     <div className={className ?? 'glass rounded-3xl p-2 sm:p-3'}>
       <div
-        ref={wrapRef}
+        ref={wrapRef as React.RefObject<HTMLDivElement>}
         role="img"
         aria-label="An animated Rubik's cube made of small coloured glyphs, turning on its own"
-        onPointerMove={onPointerMove}
-        onPointerLeave={() => engineRef.current?.setPointer(null, null)}
+        // Mouse: hover to tilt. Touch: drag sideways to tilt; vertical
+        // drags still scroll the page.
+        onPointerDown={(e) => {
+          if (e.pointerType === 'touch') {
+            touchDown.current = true
+            aim(e)
+          }
+        }}
+        onPointerMove={(e) => {
+          if (e.pointerType !== 'touch' || touchDown.current) aim(e)
+        }}
+        onPointerUp={(e) => e.pointerType === 'touch' && release()}
+        onPointerCancel={release}
+        onPointerLeave={release}
         onClick={() => engineRef.current?.swirlNow()}
-        className="relative aspect-[4/3] w-full cursor-pointer select-none overflow-hidden rounded-2xl border border-white/10 bg-[rgb(var(--surface))]/60 sm:aspect-[16/9]"
+        className="relative aspect-[4/3] w-full cursor-pointer touch-pan-y select-none overflow-hidden rounded-2xl border border-white/10 bg-[rgb(var(--surface))]/60 sm:aspect-[16/9]"
       >
         <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" />
         <canvas ref={canvasRef} className="absolute inset-0 block h-full w-full" />
