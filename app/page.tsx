@@ -14,18 +14,6 @@ import { HeroShapes } from '@/components/GlyphShapes'
 
 type GitHubEvent = { type: string; repo?: { name?: string }; created_at: string }
 
-const SKILLS = [
-  'Agentic AI',
-  'RAG',
-  'Evals',
-  'Python',
-  'Spark',
-  'GCP',
-  'PostgreSQL',
-  'Docker',
-  'MCP',
-  'Time-series forecasting'
-]
 
 async function getLastShip(): Promise<string | null> {
   try {
@@ -50,134 +38,97 @@ export default async function HomePage() {
   const lastShip = await getLastShip()
   return (
     <main>
-      {/* Hero doubles as the about section: intro, how I build, and every link. */}
       <section id="about" className="relative overflow-x-clip pt-14 sm:pt-20">
         <HeroShapes />
         <Container>
-          <div className="grid items-start gap-10 md:grid-cols-[1.2fr_0.8fr]">
+          <div className="grid items-start gap-10 md:grid-cols-[1.2fr_0.8fr] lg:gap-14">
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-                Agentic AI • ML Systems • Quantitative Modeling
-              </p>
+              <div className="flex items-center gap-3">
+                {/* Phones get a small avatar here instead of the big portrait. */}
+                <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-white/15 md:hidden">
+                  <Image src="/photos/headshot.jpg" alt="" fill className="object-cover" sizes="44px" />
+                </span>
+                <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
+                  ML engineer · Pittsburgh
+                </p>
+              </div>
 
               <h1 className="mt-4 text-balance font-space text-4xl font-semibold leading-[1.1] sm:text-6xl">
                 Machine learning for{' '}
                 <span className="block min-h-[1.2em] bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent">
                   <TypedWords
-                    words={[
-                      'trading desks.',
-                      'agentic systems.',
-                      'applied research.',
-                      'production pipelines.',
-                      'power markets.'
-                    ]}
+                    words={['power markets.', 'trading desks.', 'solar farms.', 'aircraft design.']}
                   />
                 </span>
               </h1>
 
-              <p className="mt-5 max-w-xl text-pretty text-base text-white/70 sm:text-lg">
-                I build ML systems that survive contact with production: demand forecasting on a proprietary trading desk, Boeing funded research on agentic AI for engineering design, and pipelines that run end to end from raw data to deployment. The domains vary; the standard does not. Evidence over vibes, tests over demos.
+              <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-white/70 sm:text-lg">
+                I&apos;m Mayank. I&apos;m finishing my master&apos;s in AI Engineering at Carnegie
+                Mellon. This summer I built load forecasts for a power trading desk, and before CMU I
+                spent two years as a data scientist at Gentari, PETRONAS&apos;s clean energy company.
+                I also do Boeing-funded research on AI agents for aircraft design.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-4">
                 <Link
-                  href="/projects"
-                  className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:opacity-90"
+                  href="#work"
+                  className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:opacity-90"
                 >
-                  View projects
+                  See my work
                 </Link>
                 <Link
                   href="/resume?from=hero"
-                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
+                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
-                  Download resume
+                  Resume
                 </Link>
-                <TrackedLink
-                  href="mailto:mayankdixit132001@gmail.com"
-                  event="contact_click"
-                  data={{ source: 'hero' }}
-                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
-                >
-                  Contact
-                </TrackedLink>
-                <TrackedLink
-                  href="https://www.linkedin.com/in/mayank-dixit-max007/"
-                  event="outbound_click"
-                  data={{ destination: 'linkedin', source: 'hero' }}
-                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
-                >
-                  LinkedIn
-                </TrackedLink>
-                <TrackedLink
-                  href="https://github.com/Kugel-Blitz-13"
-                  event="outbound_click"
-                  data={{ destination: 'github', source: 'hero' }}
-                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10"
-                >
-                  GitHub
-                </TrackedLink>
-              </div>
-
-              <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                <div className="glass rounded-2xl p-5">
-                  <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-                    How I build
-                  </p>
-                  <p className="mt-3 text-sm text-white/75">
-                    I like projects where the hard part is the system: messy data, real-time
-                    constraints, ambiguous objectives, and shipping something that holds up in
-                    production.
-                  </p>
-                  <ul className="mt-4 space-y-2 text-sm text-white/70">
-                    <li>• Pipelines that are reproducible (tests, schemas, deterministic outputs)</li>
-                    <li>• Reliability first, then performance (profiling, caching, batching)</li>
-                    <li>• Quality measured with evals, not vibes (offline + online metrics)</li>
-                  </ul>
-                </div>
-
-                <div className="glass rounded-2xl p-5">
-                  <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Now</p>
-                  <p className="mt-3 text-sm text-white/75">
-                    Quant work in power markets + Boeing funded research on MCP agent tooling.
-                  </p>
-                  <p className="mt-4 text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-                    Focus
-                  </p>
-                  <p className="mt-2 text-sm text-white/75">
-                    LLM agents, RAG, evaluation, data engineering, cloud deployment.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {SKILLS.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
+                <div className="flex items-center gap-5 text-sm font-medium text-white/60 sm:pl-2">
+                  <TrackedLink
+                    href="mailto:mayankdixit132001@gmail.com"
+                    event="contact_click"
+                    data={{ source: 'hero' }}
+                    className="underline-offset-4 transition hover:text-white hover:underline"
                   >
-                    {t}
-                  </span>
-                ))}
+                    Email
+                  </TrackedLink>
+                  <TrackedLink
+                    href="https://www.linkedin.com/in/mayank-dixit-max007/"
+                    event="outbound_click"
+                    data={{ destination: 'linkedin', source: 'hero' }}
+                    className="underline-offset-4 transition hover:text-white hover:underline"
+                  >
+                    LinkedIn
+                  </TrackedLink>
+                  <TrackedLink
+                    href="https://github.com/Kugel-Blitz-13"
+                    event="outbound_click"
+                    data={{ destination: 'github', source: 'hero' }}
+                    className="underline-offset-4 transition hover:text-white hover:underline"
+                  >
+                    GitHub
+                  </TrackedLink>
+                </div>
+              </div>
+
+              <div className="mt-10 max-w-xl">
+                <TerminalCard lastShip={lastShip} />
               </div>
             </div>
 
-            <div className="space-y-4">
-              <Tilt>
-                <div className="glass relative overflow-hidden rounded-3xl p-2">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-                    <Image
-                      src="/photos/headshot.jpg"
-                      alt="Headshot"
-                      fill
-                      className="object-cover"
-                      priority
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                    />
-                  </div>
+            <Tilt className="hidden md:block">
+              <div className="glass relative overflow-hidden rounded-3xl p-2">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                  <Image
+                    src="/photos/headshot.jpg"
+                    alt="Mayank Dixit"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                  />
                 </div>
-              </Tilt>
-              <TerminalCard lastShip={lastShip} />
-            </div>
+              </div>
+            </Tilt>
           </div>
 
           <div className="mt-14 flex justify-center">
@@ -186,7 +137,7 @@ export default async function HomePage() {
               aria-label="Scroll to selected work"
               className="group flex flex-col items-center gap-1.5 text-white/40 transition hover:text-accent"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.3em]">the work</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.3em]">my work</span>
               <svg
                 className="h-6 w-6 animate-bounce"
                 viewBox="0 0 24 24"
@@ -201,12 +152,12 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section id="work" className="pt-16 sm:pt-24">
+      <section id="work" className="pt-12 sm:pt-16">
         <Container>
           <Reveal>
             <SectionHeading
               kicker="Selected work"
-              title="Shipped, measured, still running"
+              title="A few things I've built"
               right={
                 <Link
                   href="/projects"
@@ -216,9 +167,6 @@ export default async function HomePage() {
                 </Link>
               }
             />
-            <p className="mt-3 max-w-2xl text-sm text-white/60">
-              Three results, one number each. The full write ups are a click away.
-            </p>
           </Reveal>
           <div className="mt-8">
             <SelectedWork />
@@ -229,10 +177,7 @@ export default async function HomePage() {
       <section id="experience" className="pt-16 sm:pt-24">
         <Container>
           <Reveal>
-            <SectionHeading kicker="Experience" title="My work through the years" />
-            <p className="mt-3 max-w-2xl text-sm text-white/60">
-              Most recent first. Parallel bars mean parallel lives.
-            </p>
+            <SectionHeading kicker="Experience" title="Where I've worked and studied" />
           </Reveal>
           <Reveal delay={0.1} className="mt-8">
             <WorkTimeline />
@@ -242,7 +187,7 @@ export default async function HomePage() {
 
       <section className="pt-16 sm:pt-24">
         <Container>
-          <SectionHeading kicker="Publications" title="Selected papers" />
+          <SectionHeading kicker="Research" title="Papers" />
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             <TrackedLink
@@ -282,11 +227,8 @@ export default async function HomePage() {
               href="/personal"
               className="group flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-sm text-white/55 transition hover:text-white"
             >
-              <span>
-                Off the clock: three games, a Rubik&apos;s cube that turns itself, photos, and what is on loop
-                while I code.
-              </span>
-              <span className="font-semibold text-accent">Have a look →</span>
+              <span>Off the clock: a few games I made, some photos, and what I&apos;m listening to.</span>
+              <span className="font-semibold text-accent">Take a look →</span>
             </Link>
           </Reveal>
         </Container>

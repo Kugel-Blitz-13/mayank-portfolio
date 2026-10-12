@@ -70,9 +70,9 @@ export async function MusicCard() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-            The soundtrack
+            What I’m listening to
           </p>
-          <h3 className="mt-2 text-base font-semibold text-white">On repeat, last 4 weeks</h3>
+          <h3 className="mt-2 text-base font-semibold text-white">Last 4 weeks</h3>
         </div>
         <a
           href={STATSFM_PROFILE}
@@ -88,23 +88,23 @@ export async function MusicCard() {
         <ArtistGrid artists={recent} />
       ) : (
         <p className="mt-4 text-sm text-white/60">
-          Live listening data is taking a break. The full picture lives on my stats.fm page.
+          Couldn’t load this right now. It’s on my stats.fm page.
         </p>
       )}
 
       <div className="mt-7 border-t border-white/10 pt-6">
-        <h3 className="text-base font-semibold text-white">All time heavy rotation</h3>
+        <h3 className="text-base font-semibold text-white">All time</h3>
         {lifetime ? (
           <ArtistGrid artists={lifetime} />
         ) : (
           <p className="mt-4 text-sm text-white/60">
-            Lifetime numbers are hiding right now. They live on my stats.fm page too.
+            Couldn’t load this right now. It’s on my stats.fm page.
           </p>
         )}
       </div>
 
       <p className="mt-5 text-xs text-white/40">
-        Pulled from my Spotify history via stats.fm, refreshed weekly.
+        From my Spotify, through stats.fm. Updates weekly.
       </p>
     </div>
   )

@@ -16,7 +16,7 @@ const pixel = Press_Start_2P({ weight: '400', subsets: ['latin'], variable: '--f
 
 export const metadata: Metadata = {
   title: 'Mayank Dixit | AI Engineer',
-  description: 'Portfolio: ML systems, agentic AI, and quantitative modeling across trading, aerospace research, and energy.'
+  description: 'Mayank Dixit is an ML engineer in Pittsburgh working on forecasting, energy, and AI agents.'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -8,20 +8,20 @@ type Action = { label: string; hint: string; href: string; external?: boolean }
 
 const ACTIONS: Action[] = [
   { label: 'Go home', hint: 'page', href: '/' },
-  { label: 'Selected work: three results, one number each', hint: 'section', href: '/#work' },
-  { label: 'Experience: my work through the years', hint: 'section', href: '/#experience' },
+  { label: 'Selected work', hint: 'section', href: '/#work' },
+  { label: 'Experience', hint: 'section', href: '/#experience' },
   { label: 'All projects', hint: 'page', href: '/projects' },
-  { label: 'About: how I build', hint: 'section', href: '/#about' },
-  { label: 'Off the clock: games, photos, music', hint: 'page', href: '/personal' },
-  { label: 'The arcade: forecast game + tech wordle', hint: 'games', href: '/personal#arcade' },
-  { label: 'The idle cube: a Rubik\'s cube that solves nothing', hint: 'generative', href: '/personal#cube' },
-  { label: 'The career graph: years vs ambition', hint: 'chart', href: '/personal#career' },
-  { label: 'Beyond work: photos + music', hint: 'section', href: '/personal#beyond' },
+  { label: 'About me', hint: 'section', href: '/#about' },
+  { label: 'Off the clock', hint: 'page', href: '/personal' },
+  { label: 'Games', hint: 'section', href: '/personal#arcade' },
+  { label: 'The idle cube', hint: 'section', href: '/personal#cube' },
+  { label: 'Career graph', hint: 'section', href: '/personal#career' },
+  { label: 'Photos and music', hint: 'section', href: '/personal#beyond' },
   { label: 'Download resume', hint: 'pdf', href: '/resume?from=palette' },
   { label: 'Email Mayank', hint: 'contact', href: 'mailto:mayankdixit132001@gmail.com', external: true },
   { label: 'LinkedIn', hint: 'link', href: 'https://www.linkedin.com/in/mayank-dixit-max007/', external: true },
   { label: 'GitHub', hint: 'link', href: 'https://github.com/Kugel-Blitz-13', external: true },
-  { label: 'Listening stats on stats.fm', hint: 'link', href: 'https://stats.fm/kugelblitz', external: true },
+  { label: 'stats.fm', hint: 'link', href: 'https://stats.fm/kugelblitz', external: true },
   { label: 'Simulate a grid event', hint: 'easter egg', href: '#grid-event' },
   { label: 'Toggle CRT desk mode', hint: 'easter egg', href: '#crt' }
 ]
@@ -142,7 +142,7 @@ export function CommandPalette() {
             <div className="max-h-72 overflow-y-auto p-2">
               {results.length === 0 ? (
                 <p className="px-3 py-6 text-center text-sm text-white/40">
-                  Nothing matches. The forecast did not see this coming.
+                  No matches.
                 </p>
               ) : (
                 results.map((a, i) => (

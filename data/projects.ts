@@ -18,37 +18,37 @@ export type Project = {
 export const featuredProjects: Project[] = [
   {
     slug: 'pjm-load-forecasting',
-    title: 'PJM Load Forecasting at a Power Trading Firm',
-    subtitle: 'Five Dimensions Energy, Quantitative Analyst Intern (Princeton, NJ)',
+    title: 'Load forecasting for a power trading desk',
+    subtitle: 'Five Dimensions Energy · Quantitative Analyst Intern · Princeton, NJ',
     year: '2026',
-    tags: ['time series forecasting', 'power markets', 'uncertainty quantification', 'production ML'],
+    tags: ['time series forecasting', 'power markets', 'uncertainty', 'production ML'],
     highlights: [
-      'Improved the production day ahead demand forecast behind PJM retail supply auctions with regime aware weather and calendar features; gains held on 15 of 16 utilities across two independent held out years and were merged for the production cycle.',
-      'Built and deployed a real time forecast for all 20 forecastable PJM zones: hourly, 14 day horizon, refreshed 4 times a day with 90% uncertainty bands, outperforming the grid operator’s own published forecast in every zone.',
-      'Mapped about 2,680 U.S. data center facilities to grid zones from regulatory and service territory data, validated 120 of 120 against independent records, with an LLM extraction pipeline for capacity news that keeps a human in the loop by design.',
-      'Ran about 15 pre registered experiments plus a 1,500 configuration deep learning bake off (LSTM, GRU, TFT); roughly two thirds of ideas were rejected on evidence and every negative result was documented as cleanly as the wins.'
+      'Improved the day-ahead demand forecast the desk uses for PJM retail supply auctions, mainly with weather and calendar features that change with the season. It did better for 15 of 16 utilities across two held-out years and went into production.',
+      'Built and deployed a real-time forecast for all 20 PJM zones. It predicts hourly load 14 days out, updates four times a day, comes with 90% uncertainty bands, and beat PJM’s own published forecast in every zone.',
+      'Mapped about 2,680 U.S. data centers to grid zones using regulatory and utility territory data. All 120 that I checked against independent records were right. I also set up an LLM pipeline that pulls capacity numbers out of the news, with a person reviewing every result.',
+      'Ran about 15 planned experiments and compared 1,500 deep learning setups (LSTM, GRU, TFT). About two thirds of the ideas didn’t hold up, and I wrote those up as carefully as the ones that did.'
     ],
     summary:
-      'Four solo projects on the load forecasting desk of a proprietary energy trading firm in the PJM market: sharper day ahead forecasts for supply auctions, a real time zonal forecast with uncertainty bands, data center load intelligence, and a solar data investigation. Overview only; details stay with the firm.'
+      'I spent the summer on the load forecasting desk at Five Dimensions Energy, a power trading firm in the PJM market, and ran four projects on my own. The details stay with the firm, so this is the overview.'
   },
   {
     slug: 'gentari-renewables-ml',
-    title: 'Production ML for Renewables at Gentari (PETRONAS)',
-    subtitle: 'Data Scientist → Senior Data Scientist (Gurgaon, India)',
+    title: 'Solar forecasting and automation at Gentari',
+    subtitle: 'Gentari (PETRONAS) · Data Scientist, then Senior Data Scientist · Gurgaon, India',
     year: '2023–2025',
     tags: ['deep learning', 'solar forecasting', 'RAG', 'automation', 'MLOps'],
     highlights: [
-      'Challenged third party solar forecasts with a bidirectional LSTM built on novel exogenous features; it surpassed vendor accuracy and was productionized as the in house forecast.',
-      'Architected and launched a private RAG chatbot (FAISS plus a local Llama model) that sped up analyst knowledge retrieval and cut API spend; led a Microsoft partnered solar forecasting framework on Azure while mentoring two interns.',
-      'Automated power injection uploads to government portals for 40 solar and wind plants, saving about 100 man hours every week, and deployed an LSTM inverter fault detection model across company solar sites.'
+      'Built a bidirectional LSTM solar forecast with some new weather inputs. It beat the vendor forecast we were paying for, so it became our in-house forecast.',
+      'Built a private RAG chatbot with FAISS and a local Llama model, so analysts could find answers faster without us paying for API calls. I also led a solar forecasting project with Microsoft on Azure and mentored two interns.',
+      'Automated the power injection uploads to government portals for 40 solar and wind plants, which saved about 100 hours of manual work a week. I also deployed an LSTM model that flags inverter faults across our solar sites.'
     ],
     summary:
-      'Two years shipping production ML at a global clean energy company: an in house solar forecast that beat vendor accuracy, a private RAG assistant for analysts, and automation across 40 renewable plants.'
+      'Two years as a data scientist at Gentari, the clean energy company of PETRONAS. I was promoted to senior in 2024.'
   },
   {
     slug: 'grid-scout',
     title: 'Grid-Scout',
-    subtitle: 'Smart siting for gigawatt-scale data centers',
+    subtitle: 'Where should a gigawatt data center plug into the grid?',
     year: '2025',
     tags: ['optimization', 'energy systems', 'web app', 'geospatial'],
     hero: {
@@ -58,49 +58,49 @@ export const featuredProjects: Project[] = [
       alt: 'Grid-Scout demo'
     },
     highlights: [
-      'Scores U.S. locations by co-optimizing transmission headroom, proximity to clean generation, reliability, and emissions impact.',
-      'Built an interactive siting engine UI for “big loads” to explore tradeoffs and pick candidate states/regions.'
+      'Scores U.S. locations on transmission headroom, distance to clean generation, reliability, and emissions.',
+      'An interactive map for comparing candidate sites side by side.'
     ],
     summary:
-      'A hackathon prototype that helps place large loads where they support the grid: reduce congestion risk, improve reliability, and keep marginal emissions low.'
+      'Built at the MIT Energy Hackathon. It helps pick where very large loads like data centers should connect, so they add less congestion and fewer emissions.'
   },
   {
     slug: 'mcp-aero-design',
-    title: 'Boeing-Funded MCP Agents for Aero Design Automation',
-    subtitle: 'Boeing-funded (NDA), agent orchestration + tool interfaces',
-    year: '2025–Present',
-    tags: ['AI agents', 'MCP', 'CFD', 'tooling', 'robust APIs'],
+    title: 'AI agents for aircraft design',
+    subtitle: 'Boeing-funded research at CMU’s Design Research Collective',
+    year: '2025–now',
+    tags: ['AI agents', 'MCP', 'CFD', 'tooling'],
     hero: {
-      kind: "image",
-      src: "/media/boeing.jpg",
-      alt: "Boeing-funded project"
-    },    
+      kind: 'image',
+      src: '/media/boeing.jpg',
+      alt: 'Boeing-funded project'
+    },
     highlights: [
-      'Building an agent orchestration layer that invokes multiple MCP servers (geometry, CFD, engine sizing) as reliable tools in a structured workflow (NDA-safe overview).',
-      'Hardening “agent-to-tool” interfaces with strict schemas, session isolation, structured JSON outputs, and reproducible test runs for reliability.'
+      'Building the layer that lets an agent call several MCP servers, for geometry, CFD, and engine sizing, as steps in one workflow.',
+      'Making the tools dependable for agents with strict schemas, separate sessions, structured JSON output, and repeatable test runs.'
     ],
     summary:
-      'Boeing-funded research under NDA focused on making engineering tools to be agent-callable via modular MCP interfaces; public details shared at a high level only.'
+      'Research on letting AI agents drive real engineering tools. It’s under NDA, so I can only share the outline.'
   },
   {
     slug: 'ai-coach-slack-bot',
-    title: 'AI Coach – Multi-Workspace Slack Facilitation Agent',
-    subtitle: 'Slack + AWS Lambda + DynamoDB + OpenAI (agentic intervention system)',
+    title: 'AI Coach',
+    subtitle: 'A Slack bot that keeps group discussions on track',
     year: '2026',
-    tags: ['AI agents', 'Slack API', 'AWS Lambda', 'DynamoDB', 'LLM systems'],
+    tags: ['AI agents', 'Slack API', 'AWS Lambda', 'DynamoDB', 'LLMs'],
     highlights: [
-      'Designed a multi-workspace Slack agent that detects participation imbalance, topic drift, and silence patterns in real time.',
-      'Built serverless architecture (API Gateway + Lambda container + DynamoDB) with event deduplication, rolling conversation windows, and per-workspace OAuth token isolation.',
-      'Implemented structured intervention logic with configurable thresholds and state resets for controlled, research-style nudging.',
-      'Packaged as a fully reproducible SAM deployment with OAuth flow and secure signature verification.'
+      'Notices when a couple of people dominate, when the topic drifts, or when the channel goes quiet, and posts a short nudge.',
+      'Runs on API Gateway, Lambda, and DynamoDB. It deduplicates Slack events, keeps a rolling window of recent messages, and stores a separate OAuth token for each workspace.',
+      'The thresholds are configurable, so whoever runs it decides when and how often it steps in.',
+      'Deploys with one SAM command, including the OAuth flow and Slack signature checks.'
     ],
     summary:
-      'AI Coach is a serverless, multi-tenant Slack facilitation agent that monitors conversational dynamics and generates lightweight, research-informed nudges using LLMs. Designed for reproducibility and isolation, each deployment runs in its own AWS account, supports multiple Slack workspaces via OAuth, and maintains per-channel rolling state to trigger structured interventions.'
-  },  
+      'A Slack bot that watches how a group conversation is going and nudges it when it needs it. It runs serverless on AWS and can serve several Slack workspaces at once.'
+  },
   {
     slug: 'adversarial-robust-autonomy',
-    title: 'Adversarial Robustness Prototype for Autonomous Driving',
-    subtitle: 'Hardware demo using Raspberry Pi + Arduino modules',
+    title: 'Making a self-driving demo harder to fool',
+    subtitle: 'Raspberry Pi and Arduino hardware prototype',
     year: '2022',
     tags: ['computer vision', 'robustness', 'robotics', 'prototype'],
     hero: {
@@ -110,74 +110,71 @@ export const featuredProjects: Project[] = [
     },
     links: [
       {
-        label: 'Paper (ResearchGate) — Adversarial Defense for Autonomous Driving',
+        label: 'Read the paper',
         href: 'https://www.researchgate.net/publication/370587091_Structure-Based_Learning_for_Robust_Defense_Against_Adversarial_Attacks_in_Autonomous_Driving_Agents'
       }
     ],
     highlights: [
-      'Identified adversarial-attack vulnerabilities and built a real-world prototype to demonstrate practical robustness.',
-      'Integrated embedded compute + sensing and validated behavior in controlled test scenarios.'
+      'Found ways that small, deliberate changes to the input could fool the driving model, then tested defenses against them.',
+      'Built the hardware prototype with onboard compute and sensors and ran it through controlled test scenarios.'
     ],
     summary:
-      'A hands-on prototype that connects adversarial ML insights to a physical autonomy demo.'
+      'A hardware demo that goes with my paper on defending driving models against adversarial attacks.'
   }
 ]
 
 export const moreProjects: Project[] = [
   {
     slug: 'fifa-analytics',
-    title: 'FIFA Player Analytics + ML Pipeline',
-    subtitle: 'GCP + Spark + PostgreSQL + multi-model regression',
+    title: 'FIFA player analytics',
+    subtitle: 'GCP, Spark, PostgreSQL',
     year: '2026',
     tags: ['GCP', 'Spark', 'PostgreSQL', 'ML pipeline'],
     highlights: [
-      'End-to-end pipeline: ingest (2015–2022), unify schemas, and enable scalable analytics in PostgreSQL.',
-      'Trained and benchmarked multiple regression models (Spark MLlib + deep learning) for value or rating prediction on GCP.'
+      'Loads eight seasons of player data (2015–2022), fixes the schema differences between years, and stores it all in PostgreSQL.',
+      'Trains and compares several models with Spark MLlib and deep learning on GCP to predict player value and rating.'
     ],
-    summary:
-      'A cloud-deployed analytics and modeling pipeline for large, multi-year sports datasets.'
+    summary: 'A cloud data pipeline and a set of models built on eight seasons of FIFA player data.'
   },
   {
     slug: 'private-rag-chatbot',
-    title: 'Private RAG Chatbot for Enterprise Knowledge',
-    subtitle: 'FAISS + local Llama to reduce latency and API spend',
+    title: 'Private RAG chatbot',
+    subtitle: 'FAISS and a local Llama model',
     year: '2024–2025',
     tags: ['RAG', 'FAISS', 'LLM', 'enterprise'],
     highlights: [
-      'Built a private RAG chatbot with FAISS and a local Llama model to reduce API cost and speed up retrieval.',
-      'Mentored interns and shipped an internal tool for analysts.'
+      'Answers questions from internal documents using FAISS for retrieval and a Llama model running locally, so nothing goes to an outside API.',
+      'Shipped as an internal tool for analysts. I mentored the interns who helped build it.'
     ],
-    summary:
-      'A cost-aware internal assistant for fast, private knowledge retrieval.'
+    summary: 'An internal assistant at Gentari that was faster and cheaper than calling a hosted model.'
   },
   {
     slug: 'bearing-fault-vit',
-    title: 'Bearing-Fault Detection Pipeline',
-    subtitle: 'Vision Transformers + complex-frequency features for noisy vibration',
+    title: 'Bearing fault detection',
+    subtitle: 'Vision Transformers on noisy vibration data',
     year: '2022–2023',
     tags: ['signal processing', 'ViT', 'robust ML'],
     hero: {
       kind: 'image',
       src: '/media/bearing.jpg',
-      alt: 'Bearing Faults'
+      alt: 'Bearing faults'
     },
     links: [
       {
-        label: 'IEEE Xplore — Bearing fault paper',
+        label: 'Read the paper',
         href: 'https://ieeexplore.ieee.org/document/10306508/'
       }
-    ],    
-    highlights: [
-      'Proposed a bearing-fault pipeline combining Vision Transformers with complex-frequency features for robustness on noisy signals.',
-      'Published work in ICCCNT 2023 (IEEE) and ICAET 2023 (accepted) on bearing fault classification and detection.'
     ],
-    summary:
-      'Research on robust diagnostics for industrial vibration data.'
+    highlights: [
+      'Paired Vision Transformers with complex-frequency features so the model still works when the vibration signal is noisy.',
+      'Published at ICCCNT 2023 (IEEE), with a second paper accepted at ICAET 2023.'
+    ],
+    summary: 'My undergrad thesis at NSUT, on spotting bearing faults from vibration signals.'
   }
 ]
 
-// Three results for the top of the home page. Every number here already
-// appears in the project highlights above; keep them in sync.
+// The three cards at the top of the home page. Every number here also
+// appears in the project write-ups above, so keep them in sync.
 export type SelectedWork = {
   slug: string
   kicker: string
@@ -189,26 +186,26 @@ export type SelectedWork = {
 export const selectedWork: SelectedWork[] = [
   {
     slug: 'pjm-load-forecasting',
-    kicker: 'Power trading · 2026',
+    kicker: 'Five Dimensions Energy · 2026',
     metric: '20 of 20',
-    metricLabel: 'PJM zones where my forecast beat the grid operator’s own',
+    metricLabel: 'PJM zones where my forecast beat the grid operator’s',
     result:
-      'Real time hourly load forecast with a 14 day horizon, refreshed four times a day with 90% uncertainty bands. Day ahead features improved 15 of 16 utilities across two held out years and were merged into the production cycle.'
+      'A real-time load forecast for every PJM zone. It updates four times a day and looks two weeks ahead. I also improved the day-ahead model the desk uses for supply auctions.'
   },
   {
     slug: 'gentari-renewables-ml',
-    kicker: 'Clean energy · 2023 to 2025',
-    metric: '~100 hours',
-    metricLabel: 'saved every week across 40 solar and wind plants',
+    kicker: 'Gentari · 2023–2025',
+    metric: '~100 hrs',
+    metricLabel: 'of manual work saved each week across 40 plants',
     result:
-      'Automated regulatory uploads for 40 plants, replaced the vendor solar forecast with an in house LSTM that beat its accuracy, and launched a private RAG assistant that cut analyst retrieval time and API spend.'
+      'Automated portal uploads for 40 solar and wind plants. I also replaced a vendor’s solar forecast with our own, more accurate one, and built a private chatbot for the analysts.'
   },
   {
     slug: 'mcp-aero-design',
-    kicker: 'Agentic AI · Boeing funded · now',
-    metric: '3 solvers',
-    metricLabel: 'geometry, CFD and engine sizing, agent callable over MCP',
+    kicker: 'CMU research · Boeing funded',
+    metric: '3 tools',
+    metricLabel: 'geometry, CFD, and engine sizing, wired up for AI agents',
     result:
-      'An orchestration layer that drives engineering tools as typed, session isolated MCP servers with structured outputs and reproducible test runs. Under NDA, so this is the high level view.'
+      'I’m building the layer that lets an agent run aircraft design tools through MCP. It’s under NDA, so this is the short version.'
   }
 ]

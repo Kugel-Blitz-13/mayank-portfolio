@@ -5,13 +5,16 @@ import { Container } from '@/components/Container'
 import { VideoHero } from '@/components/VideoHero'
 import { featuredProjects, moreProjects } from '@/data/projects'
 
+const ALL = [...featuredProjects, ...moreProjects]
+
 function getProject(slug: string) {
-  return [...featuredProjects, ...moreProjects].find((p) => p.slug === slug)
+  return ALL.find((p) => p.slug === slug)
 }
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const p = getProject(params.slug)
   if (!p) notFound()
+  const next = ALL[(ALL.indexOf(p) + 1) % ALL.length]
 
   return (
     <main className="pt-14 pb-20 sm:pt-20">
@@ -77,20 +80,34 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           </div>
         ) : null}
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <div className="glass rounded-3xl p-6 md:col-span-2">
-            <p className="text-sm text-white/75">{p.summary}</p>
+        <div className="glass mt-10 max-w-3xl rounded-3xl p-6 sm:p-8">
+          <p className="text-base leading-relaxed text-white/80">{p.summary}</p>
 
-            <p className="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-              Highlights
-            </p>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
-              {p.highlights.map((h) => (
-                <li key={h}>• {h}</li>
-              ))}
-            </ul>
-          </div>
+          <p className="mt-8 text-xs font-medium uppercase tracking-[0.22em] text-white/50">
+            What I did
+          </p>
+          <ul className="mt-4 space-y-4 text-sm leading-relaxed text-white/70 sm:text-[15px]">
+            {p.highlights.map((h) => (
+              <li key={h} className="flex gap-3">
+                <span className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
         </div>
+
+        <Link
+          href={`/projects/${next.slug}`}
+          className="group mt-6 flex max-w-3xl items-center justify-between gap-4 rounded-3xl border border-white/10 px-6 py-5 transition hover:border-white/25 hover:bg-white/[0.03] sm:px-8"
+        >
+          <span>
+            <span className="block text-xs font-medium uppercase tracking-[0.22em] text-white/45">
+              Next project
+            </span>
+            <span className="mt-1 block text-base font-semibold text-white">{next.title}</span>
+          </span>
+          <span className="text-accent transition group-hover:translate-x-1">→</span>
+        </Link>
       </Container>
     </main>
   )

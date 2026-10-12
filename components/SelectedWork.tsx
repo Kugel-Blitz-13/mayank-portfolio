@@ -18,7 +18,7 @@ export function SelectedWork() {
             <p className="mt-2 text-sm font-medium leading-snug text-white/85">{w.metricLabel}</p>
             <p className="mt-4 text-sm leading-relaxed text-white/65">{w.result}</p>
             <span className="mt-auto pt-5 text-sm font-semibold text-accent transition group-hover:underline">
-              Case study →
+              Read more →
             </span>
           </Link>
         </Reveal>

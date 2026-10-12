@@ -4,13 +4,11 @@ import { useEffect, useState } from 'react'
 
 export function TerminalCard({ lastShip }: { lastShip?: string | null }) {
   const [now, setNow] = useState<Date | null>(null)
-  const [hz, setHz] = useState('60.00')
 
   useEffect(() => {
     setNow(new Date())
     const id = setInterval(() => {
       setNow(new Date())
-      setHz((60 + (Math.random() - 0.5) * 0.04).toFixed(2))
     }, 1000)
     return () => clearInterval(id)
   }, [])
@@ -49,18 +47,15 @@ export function TerminalCard({ lastShip }: { lastShip?: string | null }) {
           <span className="text-emerald-300">open to full time roles, Dec 2026</span>
         </p>
         <p>
-          <span className="text-accent">&gt;</span> current: CMU + Boeing funded MCP research
-        </p>
-        <p>
-          <span className="text-accent">&gt;</span> grid frequency: {hz} Hz
+          <span className="text-accent">&gt;</span> current: MS at CMU, agent research for Boeing
         </p>
         {lastShip ? (
           <p>
-            <span className="text-accent">&gt;</span> last shipped: {lastShip}
+            <span className="text-accent">&gt;</span> last push: {lastShip}
           </p>
         ) : null}
         <p>
-          <span className="text-accent">&gt;</span> uptime: 3 publications, 0 unhandled exceptions
+          <span className="text-accent">&gt;</span> stack: Python, Spark, SQL, GCP, Docker, MCP
           <span className="caret text-accent">▊</span>
         </p>
       </div>

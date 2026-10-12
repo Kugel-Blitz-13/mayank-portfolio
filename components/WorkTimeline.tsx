@@ -44,67 +44,67 @@ const bands: Band[] = [
         role: 'Quantitative Analyst Intern, Load Forecasting',
         org: 'Five Dimensions Energy',
         meta: 'Princeton, NJ',
-        note: 'Four solo projects on a PJM trading desk: production day ahead forecasts, a real time zonal forecast, data center load intelligence.',
+        note: 'Four projects on my own on the PJM load forecasting desk, including a better day-ahead model and a real-time forecast for every zone.',
         type: 'Internship'
       }
     ]
   },
   {
-    period: '2025 → present',
+    period: '2025 to now',
     entries: [
       {
         role: 'M.S. Artificial Intelligence Engineering',
         org: 'Carnegie Mellon University',
         meta: 'GPA 3.92, Pittsburgh, PA',
-        note: 'Energy Science, Technology and Policy track. Graduating Dec 2026.',
+        note: 'Energy Science, Technology and Policy track. Graduating in December 2026.',
         type: 'Education'
       },
       {
         role: 'Graduate Research Assistant',
         org: 'CMU Design Research Collective',
         meta: 'Boeing funded',
-        note: 'MCP agent pipelines that run aircraft design physics end to end. Open source under cmudrc.',
+        note: 'Building MCP tools that let AI agents run aircraft design software. The code is open source under cmudrc.',
         type: 'Research'
       }
     ]
   },
   {
-    period: '2023 → 2025',
+    period: '2023 to 2025',
     entries: [
       {
-        role: 'Data Scientist → Senior Data Scientist',
+        role: 'Data Scientist, then Senior Data Scientist',
         org: 'Gentari (PETRONAS)',
         meta: 'Gurgaon, India',
-        note: 'Production solar forecasting that beat vendor accuracy, a private RAG assistant, automation across 40 renewable plants.',
+        note: 'Built a solar forecast that beat the vendor’s, a private RAG chatbot, and automation for 40 renewable plants. Promoted to senior in 2024.',
         type: 'Full time'
       }
     ]
   },
   {
-    period: '2022 → 2023',
+    period: '2022 to 2023',
     entries: [
       {
         role: 'Research Assistant, B.Tech thesis',
         org: 'NSUT Delhi',
-        note: 'Bearing fault detection with Vision Transformers. Two peer reviewed papers.',
+        note: 'Thesis on bearing fault detection with Vision Transformers. It turned into two papers.',
         type: 'Research'
       },
       {
         role: 'Research Intern',
         org: 'IIT Kharagpur',
-        note: 'Adversarial robustness for autonomous driving. Published at CVIP 2022.',
+        note: 'Worked on making driving models harder to fool. Published at CVIP 2022.',
         type: 'Research'
       }
     ]
   },
   {
-    period: '2019 → 2023',
+    period: '2019 to 2023',
     entries: [
       {
         role: 'B.Tech, Electrical Engineering',
         org: 'NSUT Delhi',
         meta: 'IAFBA national scholar',
-        note: 'Minor in ML and Data Science. First place of 110 teams at the IIT Ropar Hackathon along the way.',
+        note: 'Minor in ML and Data Science. My team won the IIT Ropar Hackathon out of 110 teams.',
         type: 'Education'
       }
     ]

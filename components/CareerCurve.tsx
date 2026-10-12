@@ -16,49 +16,49 @@ const milestones: Milestone[] = [
     role: 'B.Tech, Electrical Engineering',
     org: 'NSUT Delhi',
     detail:
-      'Started Electrical Engineering with a minor in ML and Data Science, backed by the Indian Air Force Benevolent Association national scholarship.'
+      'Started Electrical Engineering with a minor in ML, on a national scholarship from the Indian Air Force Benevolent Association.'
   },
   {
     year: '2021',
     role: 'First place of 110 teams',
     org: 'IIT Ropar Hackathon',
     detail:
-      'Built Agri.AI with my team: an end to end ML platform for farmers covering crop quality, price suggestion, and yield prediction from soil and crop type.'
+      'My team built Agri.AI, an ML app for farmers that grades crops, suggests prices, and predicts yield from soil and crop type.'
   },
   {
     year: '2022',
     role: 'Research Intern',
     org: 'IIT Kharagpur + NSUT thesis',
     detail:
-      'Adversarial robustness for autonomous driving, published at CVIP 2022. Computer vision roles at Skylark Labs and IIT Gandhinagar, plus a bearing fault thesis that became two more papers.'
+      'Worked on making driving models harder to fool, published at CVIP 2022. Also did computer vision work at Skylark Labs and IIT Gandhinagar, and my bearing fault thesis became two more papers.'
   },
   {
     year: '2023',
     role: 'Data Scientist',
     org: 'Gentari (PETRONAS)',
     detail:
-      'Joined the clean energy arm of PETRONAS. Automated portal uploads for 40 solar and wind plants, deployed inverter fault detection, and built cost estimation models.'
+      'Joined PETRONAS’s clean energy company. Automated portal uploads for 40 solar and wind plants, shipped inverter fault detection, and built cost estimation models.'
   },
   {
     year: '2024',
     role: 'Senior Data Scientist',
     org: 'Gentari (PETRONAS)',
     detail:
-      'Promoted. Productionized an in house solar forecast that beat vendor accuracy, launched a private RAG chatbot, and led a Microsoft partnered forecasting framework on Azure.'
+      'Got promoted. Our in-house solar forecast replaced the vendor’s, I launched a private RAG chatbot, and I led a forecasting project with Microsoft on Azure.'
   },
   {
     year: '2025',
     role: 'M.S. AI Engineering + Research Assistant',
     org: 'Carnegie Mellon University',
     detail:
-      'Moved to CMU for AI Engineering in Energy. Boeing funded research on MCP agent pipelines for aircraft design, an AI coach deployed on AWS, and Grid Scout at the MIT Energy Hackathon.'
+      'Moved to Pittsburgh for a master’s at CMU. Started Boeing-funded research on AI agents for aircraft design, built a Slack coaching bot on AWS, and made Grid-Scout at the MIT Energy Hackathon.'
   },
   {
     year: '2026',
     role: 'Quantitative Analyst Intern',
     org: 'Five Dimensions Energy',
     detail:
-      'Load forecasting on a PJM trading desk. Improved the production day ahead model, shipped a real time forecast for 20 zones, and mapped data center load growth.'
+      'Load forecasting on a PJM trading desk. Improved the day-ahead model, shipped a real-time forecast for all 20 zones, and mapped where data center load is growing.'
   }
 ]
 

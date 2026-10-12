@@ -1,12 +1,12 @@
 const stats: { value: string; label: string }[] = [
   { value: '20', label: 'PJM zones forecast in real time' },
-  { value: '15 of 16', label: 'utilities improved across two held out years' },
+  { value: '15 of 16', label: 'utilities improved over two held-out years' },
   { value: '3', label: 'peer reviewed publications' },
   { value: '~2,680', label: 'data center facilities mapped to grid zones' },
   { value: '1st of 110', label: 'teams at the IIT Ropar Hackathon' },
   { value: '40', label: 'renewable plants automated' },
   { value: '1,500', label: 'model configurations benchmarked' },
-  { value: '100', label: 'man hours saved every week' },
+  { value: '100', label: 'hours saved every week' },
   { value: '98.7%', label: 'bearing fault classification accuracy' }
 ]
 
